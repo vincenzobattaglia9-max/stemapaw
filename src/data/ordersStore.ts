@@ -18,7 +18,9 @@ export interface OrderRecord {
   aliExpressFulfillUrl: string;
 }
 
-// Initial mock orders to show the user how real orders look in the admin panel
+const EXACT_ALIEXPRESS_URL = "https://it.aliexpress.com/item/1005009329999811.html";
+
+// Initial mock orders with user's exact pricing and supplier item
 export const initialOrders: OrderRecord[] = [
   {
     id: "SP-92841",
@@ -29,15 +31,15 @@ export const initialOrders: OrderRecord[] = [
     postalCode: "80539",
     country: "Germany 🇩🇪",
     bundleTitle: "2x SteamPaws™ Duo Pack",
-    variantName: "Sage Mint Green",
+    variantName: "Nordic Ceramic White",
     quantity: 2,
-    totalAmount: 39.99,
+    totalAmount: 30.00,
     currency: "EUR",
     paymentMethod: "Klarna (Pay in 30 days)",
     status: "Pending Fulfillment",
     trackingNumber: "DHL-DE-9284192",
     createdAt: "2026-10-11T16:20:00Z",
-    aliExpressFulfillUrl: "https://it.aliexpress.com/w/wholesale-steamy-cat-brush.html"
+    aliExpressFulfillUrl: EXACT_ALIEXPRESS_URL
   },
   {
     id: "SP-92837",
@@ -47,16 +49,16 @@ export const initialOrders: OrderRecord[] = [
     city: "Paris",
     postalCode: "75002",
     country: "France 🇫🇷",
-    bundleTitle: "1x SteamPaws™ Brush",
-    variantName: "Warm Cream Sunshine",
+    bundleTitle: "1x SteamPaws™ Pro Brush",
+    variantName: "Nordic Ceramic White",
     quantity: 1,
-    totalAmount: 24.99,
+    totalAmount: 20.00,
     currency: "EUR",
     paymentMethod: "Apple Pay",
     status: "Dispatched",
     trackingNumber: "COLIS-FR-8371948",
     createdAt: "2026-10-10T14:15:00Z",
-    aliExpressFulfillUrl: "https://it.aliexpress.com/w/wholesale-steamy-cat-brush.html"
+    aliExpressFulfillUrl: EXACT_ALIEXPRESS_URL
   }
 ];
 
@@ -78,7 +80,7 @@ export function addOrder(newOrder: Omit<OrderRecord, 'id' | 'createdAt' | 'track
     status: 'Pending Fulfillment',
     trackingNumber,
     createdAt: new Date().toISOString(),
-    aliExpressFulfillUrl: `https://it.aliexpress.com/w/wholesale-steamy-cat-brush.html`
+    aliExpressFulfillUrl: EXACT_ALIEXPRESS_URL
   };
 
   runtimeOrders.unshift(createdOrder);

@@ -96,8 +96,8 @@ export default function HeroSection({
               {/* Organic circular container */}
               <div className="relative w-72 sm:w-96 aspect-square rounded-[36px] bg-white p-3 shadow-monito-hover border-4 border-white">
                 <img
-                  src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80"
-                  alt="Happy dog enjoying grooming"
+                  src="/images/product/real_product_1.jpg"
+                  alt="SteamPaws Pro ultrasonic brush with pet"
                   className="w-full h-full object-cover rounded-[28px]"
                 />
 
