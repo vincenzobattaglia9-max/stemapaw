@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+chrome/
+.env*.local
+ecommerce.db
+*.log
+.DS_Store
