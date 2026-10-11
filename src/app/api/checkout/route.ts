@@ -25,7 +25,7 @@ export async function POST(request: Request) {
               currency: 'eur',
               product_data: {
                 name: `${bundleTitle} (${variantName})`,
-                description: 'SteamPaws™ by Monito Pets • 3-in-1 Ultrasonic Steamy Brush (Free EU Tracked Delivery)',
+                description: 'Pettoh™ Pro • 3-in-1 Self-Cleaning Ultrasonic Steamy Brush (Free EU Tracked Delivery)',
                 images: ['https://ae-pic-a1.aliexpress-media.com/kf/Sd1666179dac54183925043efdc2629c2F.jpg'],
               },
               unit_amount: Math.round(totalAmount * 100),

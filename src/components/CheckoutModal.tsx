@@ -103,7 +103,7 @@ export default function CheckoutModal({
             </div>
             <div>
               <h3 className="font-black text-base sm:text-lg">
-                Monito Pets • Fast European Checkout
+                Pettoh™ • Fast European Checkout
               </h3>
               <p className="text-xs text-[#FCEED5]">
                 Official Stripe Checkout • Apple Pay & Klarna Active

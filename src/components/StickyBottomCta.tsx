@@ -45,7 +45,7 @@ export default function StickyBottomCta({
               <span className="font-bold text-[#003459]">4.9/5 Rating (2.4k+ Reviews)</span>
             </div>
             <div className="text-xs font-black text-[#003459]">
-              SteamPaws™ by Monito • Free Tracked EU Shipping
+              Pettoh™ Pro • Free Tracked EU Shipping
             </div>
           </div>
         </div>

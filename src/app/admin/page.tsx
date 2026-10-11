@@ -57,8 +57,8 @@ export default function AdminPage() {
   const totalRevenue = orders.reduce((sum, o) => sum + o.totalAmount, 0);
   const totalOrders = orders.length;
   const pendingOrders = orders.filter(o => o.status === 'Pending Fulfillment').length;
-  // Estimated supplier cost per item is ~4.50€
-  const totalCost = orders.reduce((sum, o) => sum + (o.quantity * 4.50), 0);
+  // Estimated supplier cost per item is €11.89 (AliExpress Choice)
+  const totalCost = orders.reduce((sum, o) => sum + (o.quantity * 11.89), 0);
   const netProfit = totalRevenue - totalCost;
 
   return (
@@ -75,9 +75,9 @@ export default function AdminPage() {
               <ArrowLeft className="w-5 h-5" />
             </Link>
             <div>
-              <h1 className="text-xl font-black text-gray-900 flex items-center gap-2">
-                <span>SteamPaws™</span>
-                <span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
+              <h1 className="text-xl font-black text-[#003459] flex items-center gap-2">
+                <span>Pettoh™</span>
+                <span className="text-xs bg-[#FCEED5] text-[#003459] font-bold px-2.5 py-0.5 rounded-full">
                   Merchant Portal
                 </span>
               </h1>

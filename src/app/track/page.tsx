@@ -21,11 +21,11 @@ export default function TrackOrderPage() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-emerald-700 transition-colors">
+          <Link href="/" className="flex items-center gap-2 text-sm font-bold text-[#003459] hover:text-[#002A48] transition-colors">
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to SteamPaws Store</span>
+            <span>Back to Pettoh Store</span>
           </Link>
-          <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">
+          <span className="text-xs font-bold text-[#003459] bg-[#FCEED5] px-3 py-1 rounded-full">
             European Carrier Tracking
           </span>
         </div>
@@ -35,14 +35,14 @@ export default function TrackOrderPage() {
         
         {/* Title */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3">
-            <Truck className="w-6 h-6" />
+          <div className="w-12 h-12 rounded-2xl bg-[#FCEED5] text-[#003459] flex items-center justify-center mx-auto mb-3 font-bold">
+            🐾
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-gray-900">
+          <h1 className="text-2xl sm:text-3xl font-black text-[#003459]">
             Track Your European Package
           </h1>
-          <p className="text-xs sm:text-sm text-gray-500">
-            Enter your Order ID (e.g. <span className="font-mono font-bold text-emerald-700">SP-92841</span>) or your email address to see live tracking updates.
+          <p className="text-xs sm:text-sm text-[#667479]">
+            Enter your Order ID (e.g. <span className="font-mono font-bold text-[#003459]">PT-92841</span>) or your email address to see live tracking updates.
           </p>
         </div>
 
@@ -129,7 +129,7 @@ export default function TrackOrderPage() {
       </main>
 
       <footer className="text-center py-6 text-xs text-gray-400 border-t border-gray-100">
-        © 2026 SteamPaws Europe • Automated Customer Tracking System
+        © 2026 Pettoh Europe • Automated Customer Tracking System
       </footer>
 
     </div>

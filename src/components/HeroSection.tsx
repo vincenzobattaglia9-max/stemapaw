@@ -41,7 +41,7 @@ export default function HeroSection({
               <div className="inline-flex items-center gap-2 bg-white/80 border border-[#F7DBA7] px-4 py-1.5 rounded-full shadow-2xs">
                 <span className="text-base">🐾</span>
                 <span className="text-xs font-black uppercase tracking-wider text-[#003459]">
-                  Monito Pets • Europe's #1 Grooming Innovation
+                  Pettoh™ • Europe's #1 Grooming Innovation
                 </span>
               </div>
 
@@ -52,7 +52,7 @@ export default function HeroSection({
 
               <p className="text-base sm:text-lg text-[#242B33] font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 Having a pet brings pure happiness, but flying fur on your clothes and furniture doesn't have to. 
-                Meet <strong className="text-[#003459]">SteamPaws™</strong>: the ultrasonic cold-mist grooming brush pets adore.
+                Meet <strong className="text-[#003459]">Pettoh™ Pro</strong>: the self-cleaning ultrasonic steamy brush pets adore.
               </p>
 
               {/* Monito Dual Pill Buttons */}
@@ -140,7 +140,7 @@ export default function HeroSection({
           <span>/</span>
           <span>Dog & Cat Care</span>
           <span>/</span>
-          <span className="text-[#003459]">SteamPaws™ 3-in-1 Brush</span>
+          <span className="text-[#003459]">Pettoh™ Pro 3-in-1 Brush</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -190,11 +190,11 @@ export default function HeroSection({
               </div>
               <div className="bg-white p-3.5 rounded-2xl border border-gray-100 shadow-2xs">
                 <div className="text-[#003459] font-black text-lg">0 Hurt</div>
-                <div className="text-[11px] text-[#667479] font-bold">Soft Silicone</div>
+                <div className="text-[11px] text-[#667479] font-bold">Bead Safety Pins</div>
               </div>
               <div className="bg-white p-3.5 rounded-2xl border border-gray-100 shadow-2xs">
-                <div className="text-[#003459] font-black text-lg">1 Sec</div>
-                <div className="text-[11px] text-[#667479] font-bold">Peel & Clean</div>
+                <div className="text-[#003459] font-black text-lg">1 Click</div>
+                <div className="text-[11px] text-[#667479] font-bold">Self-Cleaning</div>
               </div>
             </div>
 
@@ -205,14 +205,14 @@ export default function HeroSection({
             
             <div>
               <div className="inline-block bg-[#FCEED5] text-[#003459] text-xs font-black px-3 py-1 rounded-full mb-2">
-                SKU: MP-STEAM-2026 • IN STOCK (EU)
+                SKU: PT-PRO-2026 • IN STOCK (EU)
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-[#003459] tracking-tight">
                 {PRODUCT_DATA.productName}
               </h2>
               <p className="mt-3 text-sm text-[#242B33] leading-relaxed font-medium">
                 Ordinary wire slickers scratch pet skin and create flying static fur. 
-                <strong className="text-[#003459]"> SteamPaws™ by Monito</strong> combines soothing room-temperature ultrasonic nano-mist and soft silicone grooming pins for effortless hair removal and shiny coats.
+                <strong className="text-[#003459]"> Pettoh™ Pro</strong> combines soothing room-temperature ultrasonic nano-mist and 150° protection pins with a push-button fur ejector for effortless grooming.
               </p>
             </div>
 

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="pawGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFB703" />
+      <stop offset="100%" stop-color="#EDA415" />
+    </linearGradient>
+  </defs>
+  <!-- Background Circle in Monito Navy -->
+  <rect width="64" height="64" rx="20" fill="#003459" />
+  
+  <!-- Main Paw Pad -->
+  <ellipse cx="32" cy="40" rx="13" ry="10" fill="url(#pawGrad)" />
+  
+  <!-- 4 Toe Pads -->
+  <circle cx="19" cy="25" r="5" fill="url(#pawGrad)" />
+  <circle cx="28" cy="18" r="5.5" fill="url(#pawGrad)" />
+  <circle cx="36" cy="18" r="5.5" fill="url(#pawGrad)" />
+  <circle cx="45" cy="25" r="5" fill="url(#pawGrad)" />
+</svg>

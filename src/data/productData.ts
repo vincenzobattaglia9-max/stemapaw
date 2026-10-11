@@ -34,8 +34,8 @@ export interface ReviewItem {
 }
 
 export const PRODUCT_DATA = {
-  brand: "SteamPaws™ by Monito",
-  productName: "SteamPaws™ Pro • 3-in-1 Self-Cleaning Ultrasonic Steamy Pet Brush",
+  brand: "Pettoh™",
+  productName: "Pettoh™ Pro • 3-in-1 Self-Cleaning Ultrasonic Steamy Pet Brush",
   tagline: "One-Click Fur Ejection & Ultrasonic Nano-Mist For Stress-Free Grooming",
   rating: 4.9,
   reviewCount: 2480,
@@ -46,7 +46,7 @@ export const PRODUCT_DATA = {
     {
       url: "/images/product/real_product_1.jpg",
       caption: "Sleek ergonomic design with cool nano-mist spray, self-cleaning ejector & USB-C",
-      tag: "Official Product"
+      tag: "Official Pettoh™"
     },
     {
       url: "/images/product/real_product_4.jpg",
@@ -96,35 +96,35 @@ export const PRODUCT_DATA = {
     {
       id: "single",
       quantity: 1,
-      title: "1x SteamPaws™ Pro Brush",
+      title: "1x Pettoh™ Pro Brush",
       subtitle: "Includes Brush, Refill Dropper & USB-C Cable",
-      price: 20.00,
-      originalPrice: 39.99,
-      savings: 19.99,
-      discountBadge: "SAVE 50%"
+      price: 28.00,
+      originalPrice: 56.00,
+      savings: 28.00,
+      discountBadge: "SAVE 50% TODAY"
     },
     {
       id: "double",
       quantity: 2,
-      title: "2x SteamPaws™ Duo Pack",
-      subtitle: "1 for Dog + 1 for Cat, or Gift a Pet Lover",
-      price: 30.00,
-      originalPrice: 79.98,
-      savings: 49.98,
-      discountBadge: "BEST SELLER • ONLY €15 EACH",
+      title: "2x Pettoh™ Duo Pack",
+      subtitle: "1 for Dog + 1 for Cat, or Gift a Pet Lover (Only €22.50 each)",
+      price: 44.99,
+      originalPrice: 112.00,
+      savings: 67.01,
+      discountBadge: "MOST POPULAR • EXTRA 20% OFF",
       isPopular: true,
-      freebie: "FREE Tracked Priority EU Shipping"
+      freebie: "FREE Tracked Express EU Shipping"
     },
     {
       id: "triple",
       quantity: 3,
       title: "3x Family & Multi-Pet Pack",
-      subtitle: "Maximum Value for Households with Multiple Pets",
-      price: 40.00,
-      originalPrice: 119.97,
-      savings: 79.97,
-      discountBadge: "BEST VALUE • ONLY €13.33 EACH",
-      freebie: "FREE Detangling Pet Comb Included"
+      subtitle: "Best Value for Multi-Pet Households (Only €19.99 each)",
+      price: 59.99,
+      originalPrice: 168.00,
+      savings: 108.01,
+      discountBadge: "BEST VALUE • 64% SAVINGS",
+      freebie: "FREE Detangling Pet Glove Included"
     }
   ] as BundleTier[],
 
@@ -187,8 +187,8 @@ export const PRODUCT_DATA = {
       flag: "🇩🇪",
       rating: 5,
       date: "3 days ago",
-      title: "The button on the back to push out the hair is pure genius!",
-      content: "I've tried so many brushes for my cat, but cleaning them was always annoying. With this one, the mist keeps the hair from flying around, and when you finish you just click the button and the whole hair disc drops right into the bin! Fast delivery to Munich in 6 days.",
+      title: "The Pettoh button on the back to push out the hair is pure genius!",
+      content: "I've tried so many brushes for my cat, but cleaning them was always annoying. With Pettoh™, the mist keeps the hair from flying around, and when you finish you just click the button and the whole hair disc drops right into the bin! Fast delivery to Munich in 6 days.",
       petType: "Cat: British Longhair",
       verified: true,
       avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80"
@@ -200,7 +200,7 @@ export const PRODUCT_DATA = {
       flag: "🇳🇱",
       rating: 5,
       date: "5 days ago",
-      title: "Ordered the 2x pack for €30, worth every single cent!",
+      title: "Ordered the 2x pack for €44.99, worth every single cent!",
       content: "Got two brushes (one for our Golden Retriever, one for our neighbor). The build quality in white is top notch, looks like a high-end device. The steam is cool room temperature so our dog didn't flinch at all. Highly recommended!",
       petType: "Dog: Golden Retriever",
       verified: true,
@@ -214,7 +214,7 @@ export const PRODUCT_DATA = {
       rating: 5,
       date: "1 week ago",
       title: "Fini les poils de chat sur tous mes vêtements noirs !",
-      content: "The mist function is whisper-quiet. My timid cat usually runs away from brushes, but she stayed completely relaxed. The hair collects into a thick pad that pushes off with the button. Super satisfaite !",
+      content: "The mist function is whisper-quiet. My timid cat usually runs away from brushes, but she stayed completely relaxed with Pettoh. The hair collects into a thick pad that pushes off with the button. Super satisfaite !",
       petType: "Cat: Ragdoll",
       verified: true,
       avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80"
@@ -226,8 +226,8 @@ export const PRODUCT_DATA = {
       flag: "🇮🇹",
       rating: 5,
       date: "2 weeks ago",
-      title: "Prodotto identico alla descrizione, arrivato con cavetto e boccetta",
-      content: "Spedizione tracciata e rapida a Milano. Il pulsante dietro per espellere i peli funziona benissimo e i dentini arrotondati non graffiano minimamente. Preso a 20€ in offerta, ottimo affare.",
+      title: "Prodotto fantastico, arrivato con cavetto e boccetta dosatrice",
+      content: "Spedizione tracciata e rapida a Milano. Il pulsante dietro per espellere i peli funziona benissimo e i dentini arrotondati non graffiano minimamente. Preso a 28€ in offerta, ottimo affare.",
       petType: "Cane: Shiba Inu",
       verified: true,
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80"
@@ -253,7 +253,7 @@ export const PRODUCT_DATA = {
     },
     {
       q: "What is your 30-Day Money-Back Guarantee?",
-      a: "We want both you and your pet to be completely in love with SteamPaws™. If for any reason your pet doesn't enjoy their grooming experience, contact our support team within 30 days for a full, hassle-free refund under EU consumer protection regulations."
+      a: "We want both you and your pet to be completely in love with Pettoh™. If for any reason your pet doesn't enjoy their grooming experience, contact our support team within 30 days for a full, hassle-free refund under EU consumer protection regulations."
     }
   ]
 };
