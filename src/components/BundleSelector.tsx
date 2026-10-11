@@ -22,7 +22,7 @@ export default function BundleSelector({
   return (
     <div className="space-y-6">
       
-      {/* Step 1: Color Selection */}
+      {/* Step 1: Choose Your Color Variant */}
       <div>
         <label className="block text-xs font-black uppercase tracking-wider text-[#003459] mb-2.5">
           Step 1: Choose Your Color Variant
@@ -34,14 +34,14 @@ export default function BundleSelector({
               <button
                 key={v.id}
                 onClick={() => onSelectVariant(v)}
-                className={`relative flex items-center gap-3 p-3.5 rounded-2xl border-2 transition-all text-left ${
+                className={`btn-spring relative flex items-center gap-3 p-3.5 rounded-2xl border-2 transition-all text-left ${
                   isSelected
-                    ? 'border-[#003459] bg-[#FCEED5]/40 shadow-sm'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
+                    ? 'border-[#003459] bg-[#FCEED5]/50 shadow-md ring-2 ring-[#003459]/15'
+                    : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/50'
                 }`}
               >
                 <span
-                  className="w-5 h-5 rounded-full border border-gray-300 shadow-inner flex-shrink-0"
+                  className="w-5 h-5 rounded-full border border-gray-300 shadow-inner flex-shrink-0 transition-transform"
                   style={{ backgroundColor: v.colorHex }}
                 />
                 <div className="flex-1 min-w-0">
@@ -55,7 +55,7 @@ export default function BundleSelector({
                   )}
                 </div>
                 {isSelected && (
-                  <div className="w-5 h-5 rounded-full bg-[#003459] flex items-center justify-center text-white flex-shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#003459] flex items-center justify-center text-white flex-shrink-0 animate-scale">
                     <Check className="w-3 h-3 stroke-[3]" />
                   </div>
                 )}
@@ -69,7 +69,7 @@ export default function BundleSelector({
       <div>
         <div className="flex items-center justify-between mb-2.5">
           <label className="block text-xs font-black uppercase tracking-wider text-[#003459]">
-            Step 2: Select Quantity (Monito Value Bundles)
+            Step 2: Select Quantity (Value Bundles)
           </label>
           <span className="text-xs font-bold text-[#EDA415] flex items-center gap-1">
             <Flame className="w-3.5 h-3.5 fill-[#EDA415]" />
@@ -85,9 +85,9 @@ export default function BundleSelector({
               <div
                 key={bundle.id}
                 onClick={() => onSelectBundle(bundle)}
-                className={`relative cursor-pointer rounded-2xl p-4 sm:p-4.5 transition-all border-2 ${
+                className={`card-hover-tilt relative cursor-pointer rounded-2xl p-4 sm:p-4.5 transition-all border-2 ${
                   isSelected
-                    ? 'border-[#003459] bg-white shadow-monito ring-2 ring-[#003459]/10'
+                    ? 'border-[#003459] bg-[#FCEED5]/30 shadow-monito ring-2 ring-[#003459]/20'
                     : 'border-gray-200 bg-white hover:border-gray-300'
                 }`}
               >
@@ -110,9 +110,9 @@ export default function BundleSelector({
                   {/* Left radio and details */}
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                         isSelected
-                          ? 'border-[#003459] bg-[#003459]'
+                          ? 'border-[#003459] bg-[#003459] scale-105'
                           : 'border-gray-300 bg-white'
                       }`}
                     >
@@ -153,7 +153,7 @@ export default function BundleSelector({
         </div>
       </div>
 
-      {/* Monito Trust Bullet Points */}
+      {/* Trust Bullet Points */}
       <div className="bg-[#FCEED5]/50 rounded-2xl p-3.5 border border-[#F7DBA7]/50 flex items-center justify-around text-[11px] sm:text-xs text-[#003459] font-bold text-center gap-2">
         <div className="flex items-center gap-1">
           <Truck className="w-3.5 h-3.5 text-[#003459]" />
@@ -169,13 +169,14 @@ export default function BundleSelector({
         </div>
       </div>
 
-      {/* Main Solid Navy Button */}
+      {/* Main Solid Navy Button with Glow Pulse & Spring */}
       <button
         onClick={onProceedToCheckout}
-        className="w-full bg-[#003459] hover:bg-[#002A48] active:scale-[0.99] text-white font-black text-base sm:text-lg py-4 px-6 rounded-full shadow-lg shadow-[#003459]/25 transition-all flex flex-col items-center justify-center gap-0.5"
+        className="btn-spring w-full bg-[#003459] hover:bg-[#002A48] text-white font-black text-base sm:text-lg py-4 px-6 rounded-full shadow-lg shadow-[#003459]/25 flex flex-col items-center justify-center gap-0.5 animate-glow-pulse group"
       >
         <span className="flex items-center gap-2 tracking-wide uppercase">
-          Claim 50% Off & Checkout Now ➔
+          <span>Claim 50% Off &amp; Checkout Now</span>
+          <span className="transition-transform group-hover:translate-x-1">➔</span>
         </span>
         <span className="text-xs font-normal text-[#FCEED5]">
           Selected: {selectedBundle.title} • Total: €{selectedBundle.price.toFixed(2)} (Tax Included)
@@ -188,11 +189,11 @@ export default function BundleSelector({
           Secure European Payment Encryption
         </p>
         <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap text-xs font-bold text-[#003459]">
-          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs">💳 Cards</span>
-          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs"> Apple Pay</span>
-          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs">GPay</span>
-          <span className="bg-[#FFB703]/20 text-[#003459] border border-[#FFB703]/40 px-2.5 py-1 rounded-full">Klarna.</span>
-          <span className="bg-[#FCEED5] text-[#003459] border border-[#F7DBA7] px-2.5 py-1 rounded-full">iDEAL</span>
+          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs hover:scale-105 transition-transform">💳 Cards</span>
+          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs hover:scale-105 transition-transform"> Apple Pay</span>
+          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs hover:scale-105 transition-transform">GPay</span>
+          <span className="bg-[#FFB703]/20 text-[#003459] border border-[#FFB703]/40 px-2.5 py-1 rounded-full hover:scale-105 transition-transform">Klarna.</span>
+          <span className="bg-[#FCEED5] text-[#003459] border border-[#F7DBA7] px-2.5 py-1 rounded-full hover:scale-105 transition-transform">iDEAL</span>
         </div>
       </div>
 

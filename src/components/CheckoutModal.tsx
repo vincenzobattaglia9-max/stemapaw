@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { BundleTier, ProductVariant } from '@/data/productData';
-import { X, ShieldCheck, Lock, CheckCircle, Truck } from 'lucide-react';
+import { X, ShieldCheck, Lock, Truck, Loader2 } from 'lucide-react';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -10,21 +10,6 @@ interface CheckoutModalProps {
   selectedBundle: BundleTier;
   selectedVariant: ProductVariant;
 }
-
-const EU_COUNTRIES = [
-  { code: 'DE', name: 'Germany 🇩🇪' },
-  { code: 'FR', name: 'France 🇫🇷' },
-  { code: 'NL', name: 'Netherlands 🇳🇱' },
-  { code: 'IT', name: 'Italy 🇮🇹' },
-  { code: 'ES', name: 'Spain 🇪🇸' },
-  { code: 'AT', name: 'Austria 🇦🇹' },
-  { code: 'BE', name: 'Belgium 🇧🇪' },
-  { code: 'SE', name: 'Sweden 🇸🇪' },
-  { code: 'DK', name: 'Denmark 🇩🇰' },
-  { code: 'PL', name: 'Poland 🇵🇱' },
-  { code: 'GB', name: 'United Kingdom 🇬🇧' },
-  { code: 'IE', name: 'Ireland 🇮🇪' },
-];
 
 export default function CheckoutModal({
   isOpen,
@@ -72,7 +57,7 @@ export default function CheckoutModal({
 
       const data = await res.json();
       
-      // If Stripe Checkout session URL is returned, redirect customer to Stripe payment page!
+      // If Stripe Checkout session URL is returned, redirect to Stripe!
       if (data.success && data.url) {
         window.location.href = data.url;
         return;
@@ -92,10 +77,10 @@ export default function CheckoutModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="relative bg-white w-full max-w-xl rounded-[32px] shadow-2xl border border-gray-100 overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+      <div className="relative bg-white w-full max-w-xl rounded-[32px] shadow-2xl border border-gray-100 overflow-hidden my-8 animate-in zoom-in-95 duration-200">
         
-        {/* Header Monito Style */}
+        {/* Header */}
         <div className="bg-[#003459] text-white p-6 flex items-center justify-between border-b border-[#002A48]">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-full bg-[#FCEED5] text-[#003459] flex items-center justify-center font-black">
@@ -106,7 +91,7 @@ export default function CheckoutModal({
                 Pettoh™ • Fast European Checkout
               </h3>
               <p className="text-xs text-[#FCEED5]">
-                Official Stripe Checkout • Apple Pay & Klarna Active
+                Official Stripe Checkout • Apple Pay &amp; Klarna Active
               </p>
             </div>
           </div>
@@ -120,8 +105,8 @@ export default function CheckoutModal({
 
         {orderCompleted ? (
           /* Success Screen */
-          <div className="p-6 sm:p-8 text-center space-y-5">
-            <div className="w-16 h-16 bg-[#FCEED5] text-[#003459] rounded-full flex items-center justify-center mx-auto text-2xl font-black">
+          <div className="p-6 sm:p-8 text-center space-y-5 animate-in zoom-in-95 duration-300">
+            <div className="w-16 h-16 bg-[#FCEED5] text-[#003459] rounded-full flex items-center justify-center mx-auto text-2xl font-black shadow-inner">
               ✓
             </div>
 
@@ -164,13 +149,13 @@ export default function CheckoutModal({
             <div className="flex gap-3">
               <a
                 href={`/track?order=${orderCompleted.id}`}
-                className="flex-1 bg-[#003459] hover:bg-[#002A48] text-white font-bold py-3.5 rounded-full text-xs sm:text-sm transition-all"
+                className="btn-spring flex-1 bg-[#003459] hover:bg-[#002A48] text-white font-bold py-3.5 rounded-full text-xs sm:text-sm text-center shadow-md"
               >
                 Track Your Package Now ➔
               </a>
               <button
                 onClick={onClose}
-                className="px-5 py-3.5 border border-gray-200 rounded-full text-xs sm:text-sm font-bold text-[#003459] hover:bg-gray-50"
+                className="btn-spring px-5 py-3.5 border border-gray-200 rounded-full text-xs sm:text-sm font-bold text-[#003459] hover:bg-gray-50"
               >
                 Close
               </button>
@@ -180,11 +165,24 @@ export default function CheckoutModal({
           /* Checkout Form */
           <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-5">
             
+            {/* Step Indicators */}
+            <div className="flex items-center justify-between text-[11px] font-extrabold uppercase tracking-wider text-[#003459] border-b border-gray-100 pb-3">
+              <div className="flex items-center gap-1.5 text-[#003459]">
+                <span className="w-5 h-5 rounded-full bg-[#003459] text-white flex items-center justify-center text-[10px]">1</span>
+                <span>Select &amp; Contact</span>
+              </div>
+              <span className="text-gray-300">➔</span>
+              <div className="flex items-center gap-1.5 text-gray-400">
+                <span className="w-5 h-5 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-[10px]">2</span>
+                <span>Stripe Payment</span>
+              </div>
+            </div>
+
             {/* Order Summary Pill */}
             <div className="bg-[#FCEED5]/50 border border-[#F7DBA7] rounded-2xl p-4 flex items-center justify-between text-xs sm:text-sm">
               <div>
                 <span className="font-black text-[#003459] block">{selectedBundle.title}</span>
-                <span className="text-[#003459]/80 text-xs font-semibold">Color: {selectedVariant.name} • Free EU Shipping</span>
+                <span className="text-[#003459]/80 text-xs font-semibold">Color: {selectedVariant.name} • Free Tracked EU Shipping</span>
               </div>
               <div className="text-right">
                 <span className="text-lg font-black text-[#003459]">€{selectedBundle.price.toFixed(2)}</span>
@@ -195,7 +193,7 @@ export default function CheckoutModal({
             {/* Customer Details */}
             <div className="space-y-3">
               <h4 className="text-xs font-black uppercase tracking-wider text-[#003459]">
-                1. Delivery & Contact Details
+                Delivery &amp; Contact Details
               </h4>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -205,15 +203,15 @@ export default function CheckoutModal({
                   placeholder="Full Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459]"
+                  className="w-full text-xs sm:text-sm px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all"
                 />
                 <input
                   required
                   type="email"
-                  placeholder="Email Address (for order receipt)"
+                  placeholder="Email Address (for tracking & receipt)"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459]"
+                  className="w-full text-xs sm:text-sm px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all"
                 />
               </div>
 
@@ -228,9 +226,9 @@ export default function CheckoutModal({
                     key={m.name}
                     type="button"
                     onClick={() => setFormData({ ...formData, paymentMethod: m.name })}
-                    className={`p-3 rounded-xl border font-bold text-left transition-all ${
+                    className={`btn-spring p-3 rounded-xl border font-bold text-left transition-all ${
                       formData.paymentMethod === m.name
-                        ? 'border-[#003459] bg-[#FCEED5]/50 text-[#003459] ring-2 ring-[#003459]/10'
+                        ? 'border-[#003459] bg-[#FCEED5]/50 text-[#003459] ring-2 ring-[#003459]/15'
                         : 'border-gray-200 text-[#667479] hover:border-gray-300'
                     }`}
                   >
@@ -240,14 +238,17 @@ export default function CheckoutModal({
               </div>
             </div>
 
-            {/* Submit Button */}
+            {/* Submit Button with Loading Spinner */}
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#003459] hover:bg-[#002A48] active:scale-98 text-white font-black text-base py-4 rounded-full shadow-lg shadow-[#003459]/25 transition-all flex items-center justify-center gap-2"
+              className="btn-spring w-full bg-[#003459] hover:bg-[#002A48] text-white font-black text-base py-4 rounded-full shadow-lg shadow-[#003459]/25 flex items-center justify-center gap-2 animate-glow-pulse disabled:opacity-75 disabled:cursor-wait"
             >
               {isLoading ? (
-                <span>Connecting to Stripe...</span>
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin text-[#FFB703]" />
+                  <span>Connecting to Stripe Secure Gateway...</span>
+                </>
               ) : (
                 <>
                   <Lock className="w-4 h-4 text-[#FFB703]" />

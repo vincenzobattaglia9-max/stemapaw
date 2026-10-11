@@ -17,21 +17,23 @@ export default function StickyBottomCta({
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 450) {
+      if (window.scrollY > 480) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (!isVisible) return null;
-
   return (
-    <div className="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#FCEED5] py-3 px-4 shadow-monito-hover transition-all animate-in slide-in-from-bottom duration-300">
+    <div
+      className={`fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#FCEED5] py-3 px-4 shadow-monito-hover transition-all duration-300 ${
+        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
+      }`}
+    >
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         
         {/* Left: Product Info */}
@@ -68,7 +70,7 @@ export default function StickyBottomCta({
 
           <button
             onClick={onOpenCheckout}
-            className="bg-[#003459] hover:bg-[#002A48] active:scale-95 text-white font-black text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg shadow-[#003459]/25 transition-all flex items-center gap-2"
+            className="btn-spring bg-[#003459] hover:bg-[#002A48] text-white font-black text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg shadow-[#003459]/25 flex items-center gap-2 animate-glow-pulse"
           >
             <ShoppingBag className="w-4 h-4 text-[#FFB703]" />
             <span>Claim 50% Off Now</span>
