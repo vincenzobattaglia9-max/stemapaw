@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Truck, ShieldCheck, RotateCcw, Heart, ArrowRight } from 'lucide-react';
+import { Heart, ArrowRight } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -14,7 +14,7 @@ export default function Footer() {
             
             <div className="lg:col-span-6 space-y-2">
               <span className="text-xs uppercase font-black tracking-widest text-[#FFB703]">
-                Pettoh Community
+                Pettoh™ Community
               </span>
               <h3 className="text-xl sm:text-3xl font-black">
                 Join 10,000+ Happy European Pet Parents
@@ -60,10 +60,10 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs text-[#667479] max-w-sm leading-relaxed">
-              Pettoh™ Europe is dedicated to providing high quality, gentle grooming gadgets for dogs and cats.
+              Pettoh™ Europe is dedicated to providing high quality, gentle grooming gadgets for dogs and cats across the European Union.
             </p>
             <div className="flex items-center gap-2 text-xs text-[#003459] font-bold">
-              <span>Shipped across:</span>
+              <span>Tracked Delivery across:</span>
               <span>🇩🇪 🇫🇷 🇳🇱 🇮🇹 🇪🇸 🇦🇹 🇸🇪 🇧🇪 🇬🇧 🇪🇺</span>
             </div>
           </div>
@@ -71,20 +71,20 @@ export default function Footer() {
           <div>
             <h5 className="font-black text-[#003459] text-xs uppercase tracking-wider mb-3">Explore</h5>
             <ul className="space-y-2 text-xs font-bold text-[#667479]">
-              <li><a href="#buy-now" className="hover:text-[#003459]">Pettoh™ Pro Brush</a></li>
-              <li><Link href="/track" className="hover:text-[#003459]">Track European Order</Link></li>
-              <li><a href="#reviews" className="hover:text-[#003459]">Verified Reviews</a></li>
-              <li><Link href="/admin" className="hover:text-[#003459]">Merchant Portal</Link></li>
+              <li><a href="#buy-now" className="hover:text-[#003459] transition-colors">Pettoh™ Pro Brush</a></li>
+              <li><Link href="/track" className="hover:text-[#003459] transition-colors">Track European Order</Link></li>
+              <li><a href="#reviews" className="hover:text-[#003459] transition-colors">Verified Customer Reviews</a></li>
+              <li><Link href="/admin" className="hover:text-[#003459] transition-colors">Merchant Portal</Link></li>
             </ul>
           </div>
 
           <div>
-            <h5 className="font-black text-[#003459] text-xs uppercase tracking-wider mb-3">Consumer Rights</h5>
+            <h5 className="font-black text-[#003459] text-xs uppercase tracking-wider mb-3">EU Consumer Rights</h5>
             <ul className="space-y-2 text-xs font-bold text-[#667479]">
-              <li><span className="hover:text-[#003459] cursor-pointer">EU 30-Day Money-Back Guarantee</span></li>
-              <li><span className="hover:text-[#003459] cursor-pointer">GDPR Privacy Policy</span></li>
-              <li><span className="hover:text-[#003459] cursor-pointer">Shipping & Customs Policy</span></li>
-              <li><span className="hover:text-[#003459] cursor-pointer">Terms of Service</span></li>
+              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">EU 30-Day Money-Back Guarantee</Link></li>
+              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">GDPR Privacy &amp; Cookie Policy</Link></li>
+              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">Omnibus Review Verification Notice</Link></li>
+              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">Terms of Service &amp; Impressum</Link></li>
             </ul>
           </div>
 
@@ -92,7 +92,7 @@ export default function Footer() {
 
         {/* Bottom copyright */}
         <div className="pt-8 border-t border-[#F7DBA7] text-xs font-semibold text-[#667479] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 Pettoh™ Europe. All rights reserved.</p>
+          <p>© 2026 Pettoh™ Official Store. All rights reserved.</p>
           <p className="flex items-center gap-1">
             Made with <Heart className="w-3.5 h-3.5 text-[#FFB703] fill-[#FFB703]" /> for pets across Europe.
           </p>

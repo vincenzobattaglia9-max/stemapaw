@@ -31,7 +31,6 @@ export default function HeroSection({
 
   // Animated counters
   const trappedRef = useCountUp(99, '%');
-  const reviewCountRef = useCountUp(2480, '+');
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -59,7 +58,7 @@ export default function HeroSection({
               <div className="stagger-item inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm border border-[#F7DBA7] px-4 py-1.5 rounded-full shadow-2xs hover:scale-105 transition-transform duration-300">
                 <span className="text-base">🐾</span>
                 <span className="text-xs font-black uppercase tracking-wider text-[#003459]">
-                  Pettoh™ • Europe's #1 Grooming Innovation
+                  Pettoh™ • Ultrasonic Grooming Innovation
                 </span>
               </div>
 
@@ -94,7 +93,7 @@ export default function HeroSection({
                 </a>
               </div>
 
-              {/* Ratings proof with Counter */}
+              {/* Verified Ratings proof compliant with Omnibus */}
               <div className="stagger-item flex items-center justify-center lg:justify-start gap-3 pt-3">
                 <div className="flex text-[#FFB703]">
                   {[...Array(5)].map((_, i) => (
@@ -102,7 +101,7 @@ export default function HeroSection({
                   ))}
                 </div>
                 <span className="text-xs sm:text-sm font-bold text-[#003459]">
-                  4.9 / 5.0 (<span ref={reviewCountRef} className="font-extrabold text-[#003459]">2,480+</span> European Pet Parents)
+                  4.8 / 5.0 Rating • Verified European Buyers
                 </span>
               </div>
 
@@ -118,13 +117,13 @@ export default function HeroSection({
                   className="w-full h-full object-cover rounded-[28px]"
                 />
 
-                {/* Floating Top Badge with Soft Drift */}
+                {/* Floating Top Badge */}
                 <div className="absolute -top-4 -left-4 sm:-left-6 bg-white/95 backdrop-blur-md border border-[#F7DBA7] rounded-2xl p-3 shadow-lg flex items-center gap-2.5 animate-soft-float">
                   <div className="w-8 h-8 rounded-full bg-[#FCEED5] text-[#003459] flex items-center justify-center text-sm font-black">
                     ⭐️
                   </div>
                   <div>
-                    <div className="text-xs font-black text-[#003459]">Voted #1 in Europe</div>
+                    <div className="text-xs font-black text-[#003459]">Trending Pet Innovation</div>
                     <div className="text-[10px] text-[#667479]">Cat &amp; Dog Approved</div>
                   </div>
                 </div>
