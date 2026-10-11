@@ -20,47 +20,8 @@ export interface OrderRecord {
 
 const EXACT_ALIEXPRESS_URL = "https://it.aliexpress.com/item/1005009329999811.html";
 
-// Initial mock orders with Pettoh pricing
-export const initialOrders: OrderRecord[] = [
-  {
-    id: "PT-92841",
-    customerName: "Lukas Weber",
-    email: "lukas.w@outlook.de",
-    address: "Maximilianstraße 42",
-    city: "Munich",
-    postalCode: "80539",
-    country: "Germany 🇩🇪",
-    bundleTitle: "2x Pettoh™ Duo Pack",
-    variantName: "Nordic Ceramic White",
-    quantity: 2,
-    totalAmount: 44.99,
-    currency: "EUR",
-    paymentMethod: "Klarna (Pay in 30 days)",
-    status: "Pending Fulfillment",
-    trackingNumber: "DHL-DE-9284192",
-    createdAt: "2026-10-11T16:20:00Z",
-    aliExpressFulfillUrl: EXACT_ALIEXPRESS_URL
-  },
-  {
-    id: "PT-92837",
-    customerName: "Emma Lefevre",
-    email: "emma.lefevre@gmail.com",
-    address: "18 Rue de la Paix",
-    city: "Paris",
-    postalCode: "75002",
-    country: "France 🇫🇷",
-    bundleTitle: "1x Pettoh™ Pro Brush",
-    variantName: "Nordic Ceramic White",
-    quantity: 1,
-    totalAmount: 28.00,
-    currency: "EUR",
-    paymentMethod: "Apple Pay",
-    status: "Dispatched",
-    trackingNumber: "COLIS-FR-8371948",
-    createdAt: "2026-10-10T14:15:00Z",
-    aliExpressFulfillUrl: EXACT_ALIEXPRESS_URL
-  }
-];
+// Reset to empty: no mock orders, only real customer purchases!
+export const initialOrders: OrderRecord[] = [];
 
 let runtimeOrders: OrderRecord[] = [...initialOrders];
 

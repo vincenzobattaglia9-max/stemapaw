@@ -172,93 +172,92 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs sm:text-sm">
-              <thead>
-                <tr className="bg-gray-50/70 border-b border-gray-200 text-gray-500 font-bold uppercase text-[11px] tracking-wider">
-                  <th className="p-4">Order ID & Date</th>
-                  <th className="p-4">Customer & Country</th>
-                  <th className="p-4">Bundle / Color</th>
-                  <th className="p-4">Paid (EUR)</th>
-                  <th className="p-4">Fulfillment Status</th>
-                  <th className="p-4 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {orders.map((o) => (
-                  <tr key={o.id} className="hover:bg-gray-50/50 transition-colors">
-                    
-                    {/* Order ID & Date */}
-                    <td className="p-4 font-mono font-bold text-gray-900">
-                      <div>{o.id}</div>
-                      <div className="text-[10px] text-gray-400 font-sans font-normal">
-                        {new Date(o.createdAt).toLocaleDateString()}
-                      </div>
-                    </td>
-
-                    {/* Customer & Address */}
-                    <td className="p-4">
-                      <div className="font-bold text-gray-900">{o.customerName}</div>
-                      <div className="text-xs text-gray-500">{o.email}</div>
-                      <div className="text-[11px] text-gray-400">
-                        {o.address}, {o.postalCode} {o.city} ({o.country})
-                      </div>
-                    </td>
-
-                    {/* Item */}
-                    <td className="p-4">
-                      <div className="font-semibold text-gray-900">{o.bundleTitle}</div>
-                      <div className="text-xs text-emerald-700">Variant: {o.variantName}</div>
-                      <div className="text-[10px] text-gray-400">Qty: {o.quantity}</div>
-                    </td>
-
-                    {/* Total */}
-                    <td className="p-4 font-bold text-gray-900">
-                      <div>€{o.totalAmount.toFixed(2)}</div>
-                      <div className="text-[10px] text-gray-400">{o.paymentMethod}</div>
-                    </td>
-
-                    {/* Status */}
-                    <td className="p-4">
-                      <select
-                        value={o.status}
-                        onChange={(e) => handleUpdateStatus(o.id, e.target.value as OrderRecord['status'])}
-                        className={`text-xs font-bold rounded-lg px-2.5 py-1.5 border focus:outline-none ${
-                          o.status === 'Pending Fulfillment'
-                            ? 'bg-amber-50 text-amber-800 border-amber-200'
-                            : o.status === 'Dispatched'
-                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                            : 'bg-blue-50 text-blue-800 border-blue-200'
-                        }`}
-                      >
-                        <option value="Pending Fulfillment">Pending Fulfillment</option>
-                        <option value="Processing on AliExpress">Processing on AliExpress</option>
-                        <option value="Dispatched">Dispatched</option>
-                        <option value="Delivered">Delivered</option>
-                      </select>
-                      <div className="text-[10px] text-gray-400 font-mono mt-1">
-                        Track: {o.trackingNumber}
-                      </div>
-                    </td>
-
-                    {/* Action: 1-Click AliExpress */}
-                    <td className="p-4 text-right">
-                      <a
-                        href={o.aliExpressFulfillUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-sm transition-all"
-                      >
-                        <span>Fulfill on AliExpress</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
-                    </td>
-
+          {orders.length === 0 ? (
+            <div className="text-center py-16 px-4">
+              <div className="w-14 h-14 rounded-2xl bg-[#FCEED5] text-[#003459] flex items-center justify-center mx-auto mb-3 font-bold text-2xl">
+                🐾
+              </div>
+              <h4 className="font-black text-lg text-[#003459]">No Orders Recorded Yet</h4>
+              <p className="text-xs sm:text-sm text-[#667479] max-w-md mx-auto mt-1">
+                Your store is clean and ready. When a customer purchases on Pettoh™, their shipping address and 1-Click AliExpress fulfillment button will appear right here.
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-xs sm:text-sm">
+                <thead>
+                  <tr className="bg-gray-50/70 border-b border-gray-200 text-gray-500 font-bold uppercase text-[11px] tracking-wider">
+                    <th className="p-4">Order ID & Date</th>
+                    <th className="p-4">Customer & Country</th>
+                    <th className="p-4">Bundle / Color</th>
+                    <th className="p-4">Paid (EUR)</th>
+                    <th className="p-4">Fulfillment Status</th>
+                    <th className="p-4 text-right">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {orders.map((o) => (
+                    <tr key={o.id} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="p-4 font-mono font-bold text-gray-900">
+                        <div>{o.id}</div>
+                        <div className="text-[10px] text-gray-400 font-sans font-normal">
+                          {new Date(o.createdAt).toLocaleDateString()}
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        <div className="font-bold text-gray-900">{o.customerName}</div>
+                        <div className="text-xs text-gray-500">{o.email}</div>
+                        <div className="text-[11px] text-gray-400">
+                          {o.address}, {o.postalCode} {o.city} ({o.country})
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        <div className="font-semibold text-gray-900">{o.bundleTitle}</div>
+                        <div className="text-xs text-emerald-700">Variant: {o.variantName}</div>
+                        <div className="text-[10px] text-gray-400">Qty: {o.quantity}</div>
+                      </td>
+                      <td className="p-4 font-bold text-gray-900">
+                        <div>€{o.totalAmount.toFixed(2)}</div>
+                        <div className="text-[10px] text-gray-400">{o.paymentMethod}</div>
+                      </td>
+                      <td className="p-4">
+                        <select
+                          value={o.status}
+                          onChange={(e) => handleUpdateStatus(o.id, e.target.value as OrderRecord['status'])}
+                          className={`text-xs font-bold rounded-lg px-2.5 py-1.5 border focus:outline-none ${
+                            o.status === 'Pending Fulfillment'
+                              ? 'bg-amber-50 text-amber-800 border-amber-200'
+                              : o.status === 'Dispatched'
+                              ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                              : 'bg-blue-50 text-blue-800 border-blue-200'
+                          }`}
+                        >
+                          <option value="Pending Fulfillment">Pending Fulfillment</option>
+                          <option value="Processing on AliExpress">Processing on AliExpress</option>
+                          <option value="Dispatched">Dispatched</option>
+                          <option value="Delivered">Delivered</option>
+                        </select>
+                        <div className="text-[10px] text-gray-400 font-mono mt-1">
+                          Track: {o.trackingNumber}
+                        </div>
+                      </td>
+                      <td className="p-4 text-right">
+                        <a
+                          href={o.aliExpressFulfillUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-sm transition-all"
+                        >
+                          <span>Fulfill on AliExpress</span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
         </div>
 
