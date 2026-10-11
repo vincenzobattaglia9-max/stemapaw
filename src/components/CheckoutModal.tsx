@@ -52,7 +52,7 @@ export default function CheckoutModal({
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/orders', {
+      const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -71,6 +71,13 @@ export default function CheckoutModal({
       });
 
       const data = await res.json();
+      
+      // If Stripe Checkout session URL is returned, redirect customer to Stripe payment page!
+      if (data.success && data.url) {
+        window.location.href = data.url;
+        return;
+      }
+
       if (data.success && data.order) {
         setOrderCompleted({
           id: data.order.id,
@@ -99,7 +106,7 @@ export default function CheckoutModal({
                 Monito Pets • Fast European Checkout
               </h3>
               <p className="text-xs text-[#FCEED5]">
-                256-Bit Encrypted • 30-Day Money Back Guarantee
+                Official Stripe Checkout • Apple Pay & Klarna Active
               </p>
             </div>
           </div>
@@ -188,7 +195,7 @@ export default function CheckoutModal({
             {/* Customer Details */}
             <div className="space-y-3">
               <h4 className="text-xs font-black uppercase tracking-wider text-[#003459]">
-                1. Delivery Address (Europe)
+                1. Delivery & Contact Details
               </h4>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -203,56 +210,12 @@ export default function CheckoutModal({
                 <input
                   required
                   type="email"
-                  placeholder="Email Address (for tracking)"
+                  placeholder="Email Address (for order receipt)"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459]"
                 />
               </div>
-
-              <input
-                required
-                type="text"
-                placeholder="Street Address"
-                value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                className="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459]"
-              />
-
-              <div className="grid grid-cols-3 gap-3">
-                <input
-                  required
-                  type="text"
-                  placeholder="City"
-                  value={formData.city}
-                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  className="col-span-1 text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459]"
-                />
-                <input
-                  required
-                  type="text"
-                  placeholder="Postal Code"
-                  value={formData.postalCode}
-                  onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                  className="col-span-1 text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459]"
-                />
-                <select
-                  value={formData.country}
-                  onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                  className="col-span-1 text-xs sm:text-sm px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459] bg-white font-medium"
-                >
-                  {EU_COUNTRIES.map((c) => (
-                    <option key={c.code} value={c.name}>{c.name}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {/* Payment Method Selector */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-black uppercase tracking-wider text-[#003459]">
-                2. Choose Payment Method
-              </h4>
 
               <div className="grid grid-cols-2 gap-2 text-xs">
                 {[
@@ -284,18 +247,18 @@ export default function CheckoutModal({
               className="w-full bg-[#003459] hover:bg-[#002A48] active:scale-98 text-white font-black text-base py-4 rounded-full shadow-lg shadow-[#003459]/25 transition-all flex items-center justify-center gap-2"
             >
               {isLoading ? (
-                <span>Confirming Order...</span>
+                <span>Connecting to Stripe...</span>
               ) : (
                 <>
                   <Lock className="w-4 h-4 text-[#FFB703]" />
-                  <span>Pay €{selectedBundle.price.toFixed(2)} & Complete Order</span>
+                  <span>Proceed to Payment (€{selectedBundle.price.toFixed(2)}) ➔</span>
                 </>
               )}
             </button>
 
             <div className="flex items-center justify-center gap-2 text-[11px] text-[#667479] font-bold">
               <ShieldCheck className="w-4 h-4 text-[#003459]" />
-              <span>30-Day Money-Back Guarantee • Free European Tracked Delivery</span>
+              <span>Official Stripe 256-Bit SSL Checkout • 30-Day Guarantee</span>
             </div>
 
           </form>
