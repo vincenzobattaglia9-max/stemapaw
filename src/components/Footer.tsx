@@ -74,7 +74,6 @@ export default function Footer() {
               <li><a href="#buy-now" className="hover:text-[#003459] transition-colors">Pettoh™ Pro Brush</a></li>
               <li><Link href="/track" className="hover:text-[#003459] transition-colors">Track European Order</Link></li>
               <li><a href="#reviews" className="hover:text-[#003459] transition-colors">Verified Customer Reviews</a></li>
-              <li><Link href="/admin" className="hover:text-[#003459] transition-colors">Merchant Portal</Link></li>
             </ul>
           </div>
 

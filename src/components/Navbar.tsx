@@ -69,15 +69,6 @@ export default function Navbar({ onOpenCheckout, cartCount }: NavbarProps) {
               <span>EUR (€)</span>
             </div>
 
-            {/* Merchant Admin Portal */}
-            <Link 
-              href="/admin" 
-              title="Merchant Order Dashboard"
-              className="text-[#003459]/70 hover:text-[#003459] p-2 rounded-full hover:bg-white/60 transition-colors"
-            >
-              <Settings className="w-5 h-5" />
-            </Link>
-
             {/* CTA Pettoh Pill Button */}
             <button
               onClick={onOpenCheckout}
