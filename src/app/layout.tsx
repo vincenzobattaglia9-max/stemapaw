@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import TrackingPixels from '@/components/TrackingPixels';
+
+const siteBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pettoh.com';
 
 export const metadata: Metadata = {
   title: 'Pettoh™ | Ultrasonic 3-in-1 Steamy Pet Brush — 50% Off (Official EU Store)',
   description: 'Say goodbye to flying loose pet fur! Pettoh™ combines gentle cold ultrasonic nano-mist and 150° safety pins with 1-click hair ejection. 30-Day Money Back Guarantee & Free Tracked European Delivery.',
-  metadataBase: new URL('https://stemapaw.vercel.app'),
+  metadataBase: new URL(siteBaseUrl),
   icons: {
     icon: '/icon.svg',
     shortcut: '/icon.svg',
@@ -13,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Pettoh™ Pro • Ultrasonic Steamy Pet Brush — 50% OFF Today!',
     description: '🐾 Traps 99% of flying fur. 1-click self-cleaning. Free tracked EU delivery in 6-9 days. Spring Sale: 50% OFF — limited stock!',
-    url: 'https://stemapaw.vercel.app',
+    url: siteBaseUrl,
     siteName: 'Pettoh™ Official Store',
     images: [
       {
@@ -44,7 +47,10 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <TrackingPixels />
+        {children}
+      </body>
     </html>
   );
 }

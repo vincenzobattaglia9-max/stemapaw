@@ -1,8 +1,7 @@
-'use client';
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PRODUCT_DATA, BundleTier, ProductVariant } from '@/data/productData';
 import { Check, Flame, ShieldCheck, Truck, RefreshCw } from 'lucide-react';
+import { trackViewContent } from '@/lib/analytics';
 
 interface BundleSelectorProps {
   selectedBundle: BundleTier;
@@ -19,6 +18,14 @@ export default function BundleSelector({
   onSelectVariant,
   onProceedToCheckout,
 }: BundleSelectorProps) {
+  useEffect(() => {
+    trackViewContent({
+      id: selectedBundle.id,
+      name: `${PRODUCT_DATA.productName} - ${selectedBundle.title}`,
+      price: selectedBundle.price,
+      currency: 'EUR',
+    });
+  }, [selectedBundle.id]);
   return (
     <div className="space-y-6">
       

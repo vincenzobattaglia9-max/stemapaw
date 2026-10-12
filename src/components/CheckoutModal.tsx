@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { BundleTier, ProductVariant } from '@/data/productData';
-import { X, ShieldCheck, Lock, Truck, Loader2, AlertCircle } from 'lucide-react';
+import { X, ShieldCheck, Lock, Truck, Loader2, AlertCircle, Sparkles, Check } from 'lucide-react';
+import { trackInitiateCheckout } from '@/lib/analytics';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -13,9 +14,14 @@ interface CheckoutModalProps {
 
 // Persistent form state outside component so it survives modal close/reopen
 let persistedForm = {
-  name: '',
   email: '',
+  name: '',
+  address: '',
+  city: '',
+  postalCode: '',
+  country: 'Germany 🇩🇪',
   paymentMethod: 'Credit Card (Stripe)',
+  orderBumpSelected: true, // Default to true for AOV maximization
 };
 
 export default function CheckoutModal({
@@ -30,18 +36,44 @@ export default function CheckoutModal({
   const [orderCompleted, setOrderCompleted] = useState<{ id: string; trackingNumber: string } | null>(null);
 
   // Keep persistedForm in sync so data survives modal close/open
-  const updateField = useCallback((field: string, value: string) => {
+  const updateField = useCallback((field: string, value: any) => {
     const updated = { ...formData, [field]: value };
     setFormData(updated);
     persistedForm = { ...persistedForm, [field]: value };
   }, [formData]);
 
+  // Track InitiateCheckout as soon as modal opens
+  useEffect(() => {
+    if (isOpen) {
+      trackInitiateCheckout({
+        id: selectedBundle.id,
+        name: `${selectedBundle.title} (${selectedVariant.name})`,
+        price: formData.orderBumpSelected ? selectedBundle.price + 5.99 : selectedBundle.price,
+        quantity: selectedBundle.quantity,
+        currency: 'EUR',
+      });
+    }
+  }, [isOpen, selectedBundle, selectedVariant, formData.orderBumpSelected]);
+
   if (!isOpen) return null;
+
+  const currentTotal = formData.orderBumpSelected
+    ? selectedBundle.price + 5.99
+    : selectedBundle.price;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage(null);
+
+    // Track checkout initiate again on submit with actual email captured
+    trackInitiateCheckout({
+      id: selectedBundle.id,
+      name: `${selectedBundle.title} (${selectedVariant.name})`,
+      price: currentTotal,
+      quantity: selectedBundle.quantity,
+      currency: 'EUR',
+    });
 
     try {
       const res = await fetch('/api/checkout', {
@@ -50,10 +82,15 @@ export default function CheckoutModal({
         body: JSON.stringify({
           customerName: formData.name,
           email: formData.email,
+          address: formData.address,
+          city: formData.city,
+          postalCode: formData.postalCode,
+          country: formData.country,
           bundleTitle: selectedBundle.title,
           variantName: selectedVariant.name,
           quantity: selectedBundle.quantity,
           totalAmount: selectedBundle.price,
+          orderBumpSelected: formData.orderBumpSelected,
           paymentMethod: formData.paymentMethod,
         }),
       });
@@ -64,20 +101,29 @@ export default function CheckoutModal({
 
       const data = await res.json();
       
-      // Stripe Checkout — redirect to Stripe hosted page
+      // Stripe Checkout — redirect to Stripe hosted page with customer_email prefilled
       if (data.success && data.url) {
         window.location.href = data.url;
         return;
       }
 
-      // Fallback order confirmation
+      // Fallback order confirmation for local / non-Stripe test runs
       if (data.success && data.order) {
         setOrderCompleted({
           id: data.order.id,
           trackingNumber: data.order.trackingNumber,
         });
         // Reset persisted form after successful order
-        persistedForm = { name: '', email: '', paymentMethod: 'Credit Card (Stripe)' };
+        persistedForm = { 
+          email: '', 
+          name: '', 
+          address: '',
+          city: '',
+          postalCode: '',
+          country: 'Germany 🇩🇪',
+          paymentMethod: 'Credit Card (Stripe)', 
+          orderBumpSelected: true 
+        };
       }
 
       if (!data.success) {
@@ -111,7 +157,7 @@ export default function CheckoutModal({
                 Pettoh™ • Fast European Checkout
               </h3>
               <p className="text-xs text-[#FCEED5]">
-                Official Stripe Checkout • Apple Pay &amp; Klarna Active
+                Official Stripe Checkout • Apple Pay, Google Pay &amp; Klarna
               </p>
             </div>
           </div>
@@ -137,7 +183,7 @@ export default function CheckoutModal({
                 Thank you{formData.name ? `, ${formData.name.split(' ')[0]}` : ''}!
               </h2>
               <p className="text-xs sm:text-sm text-[#667479] mt-1.5 max-w-sm mx-auto">
-                Your order is confirmed and queued for immediate fulfillment with European tracking.
+                Your order is confirmed and queued for immediate fulfillment. A confirmation email was sent to <strong>{formData.email}</strong>.
               </p>
             </div>
             <div className="bg-[#FDFBF8] border border-gray-200 rounded-2xl p-4 text-left space-y-2 text-xs sm:text-sm">
@@ -153,14 +199,20 @@ export default function CheckoutModal({
                 <span className="text-[#667479]">Bundle:</span>
                 <span className="font-bold text-[#003459]">{selectedBundle.title} — {selectedVariant.name}</span>
               </div>
+              {formData.orderBumpSelected && (
+                <div className="flex justify-between text-xs text-[#003459] font-bold">
+                  <span>+ Extra Atomizer Head:</span>
+                  <span>€5.99</span>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span className="text-[#667479]">Total Paid:</span>
-                <span className="font-black text-[#003459]">€{selectedBundle.price.toFixed(2)}</span>
+                <span className="font-black text-[#003459]">€{currentTotal.toFixed(2)}</span>
               </div>
             </div>
             <div className="p-3 bg-[#FCEED5] rounded-xl text-xs text-[#003459] font-bold flex items-center gap-2">
               <Truck className="w-4 h-4 flex-shrink-0" />
-              <span>Estimated EU Delivery: 6-9 business days. Tracking link sent to your email.</span>
+              <span>Estimated EU Delivery: 6-9 business days. Tracking updates available online.</span>
             </div>
             <div className="flex gap-3">
               <a
@@ -185,12 +237,12 @@ export default function CheckoutModal({
             <div className="flex items-center justify-between text-[11px] font-extrabold uppercase tracking-wider text-[#003459] border-b border-gray-100 pb-3">
               <div className="flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded-full bg-[#003459] text-white flex items-center justify-center text-[10px]">1</span>
-                <span>Contact Info</span>
+                <span>Contact &amp; Delivery</span>
               </div>
               <span className="text-gray-300">➔</span>
               <div className="flex items-center gap-1.5 text-gray-400">
                 <span className="w-5 h-5 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-[10px]">2</span>
-                <span>Stripe Payment &amp; Delivery Address</span>
+                <span>Stripe Payment</span>
               </div>
             </div>
 
@@ -212,31 +264,113 @@ export default function CheckoutModal({
               </div>
             </div>
 
-            {/* Contact Fields — address collected by Stripe in step 2 */}
+            {/* Step 1: Customer Contact Info — Email at the very top for abandoned cart recovery */}
             <div className="space-y-3">
-              <h4 className="text-xs font-black uppercase tracking-wider text-[#003459]">
-                Step 1: Your Contact Details
-              </h4>
-              <p className="text-[11px] text-[#667479]">
-                Your full delivery address will be securely collected on the next Stripe payment page.
-              </p>
+              <div className="flex items-center justify-between">
+                <h4 className="text-xs font-black uppercase tracking-wider text-[#003459]">
+                  Step 1: Your Contact Info
+                </h4>
+                <span className="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5" /> 256-bit encrypted
+                </span>
+              </div>
 
-              <input
-                required
-                type="text"
-                placeholder="Full Name"
-                value={formData.name}
-                onChange={(e) => updateField('name', e.target.value)}
-                className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all"
-              />
-              <input
-                required
-                type="email"
-                placeholder="Email Address (receipt & order tracking will be sent here)"
-                value={formData.email}
-                onChange={(e) => updateField('email', e.target.value)}
-                className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all"
-              />
+              {/* EMAIL FIRST: Crucial for cart abandonment capture */}
+              <div>
+                <input
+                  required
+                  type="email"
+                  placeholder="Email Address (required for tracking link & order confirmation)"
+                  value={formData.email}
+                  onChange={(e) => updateField('email', e.target.value)}
+                  className="w-full text-sm px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all bg-[#FDFBF8]"
+                />
+                <p className="text-[10px] text-[#667479] mt-1 pl-1">
+                  We will send your order confirmation and priority EU tracking number here.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input
+                  required
+                  type="text"
+                  placeholder="Full Name"
+                  value={formData.name}
+                  onChange={(e) => updateField('name', e.target.value)}
+                  className="w-full text-sm px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all"
+                />
+                <input
+                  type="text"
+                  placeholder="Street Address & House No."
+                  value={formData.address}
+                  onChange={(e) => updateField('address', e.target.value)}
+                  className="w-full text-sm px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <input
+                  type="text"
+                  placeholder="Postal Code"
+                  value={formData.postalCode}
+                  onChange={(e) => updateField('postalCode', e.target.value)}
+                  className="w-full text-sm px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all"
+                />
+                <input
+                  type="text"
+                  placeholder="City"
+                  value={formData.city}
+                  onChange={(e) => updateField('city', e.target.value)}
+                  className="w-full text-sm px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all"
+                />
+                <select
+                  value={formData.country}
+                  onChange={(e) => updateField('country', e.target.value)}
+                  className="w-full text-sm px-3 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all bg-white col-span-2 sm:col-span-1"
+                >
+                  <option value="Germany 🇩🇪">Germany 🇩🇪</option>
+                  <option value="Netherlands 🇳🇱">Netherlands 🇳🇱</option>
+                  <option value="France 🇫🇷">France 🇫🇷</option>
+                  <option value="Italy 🇮🇹">Italy 🇮🇹</option>
+                  <option value="Spain 🇪🇸">Spain 🇪🇸</option>
+                  <option value="Austria 🇦🇹">Austria 🇦🇹</option>
+                  <option value="Belgium 🇧🇪">Belgium 🇧🇪</option>
+                  <option value="Sweden 🇸🇪">Sweden 🇸🇪</option>
+                  <option value="United Kingdom 🇬🇧">United Kingdom 🇬🇧</option>
+                </select>
+              </div>
+            </div>
+
+            {/* ORDER BUMP SECTION (CRO / AOV Maximizer) */}
+            <div 
+              onClick={() => updateField('orderBumpSelected', !formData.orderBumpSelected)}
+              className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${
+                formData.orderBumpSelected
+                  ? 'border-[#003459] bg-[#FCEED5]/40 shadow-sm'
+                  : 'border-dashed border-gray-300 bg-gray-50/60 hover:border-gray-400'
+              }`}
+            >
+              <div className="flex items-start gap-3">
+                <div className={`w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${
+                  formData.orderBumpSelected ? 'bg-[#003459] text-white' : 'border border-gray-300 bg-white'
+                }`}>
+                  {formData.orderBumpSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                </div>
+                <div className="flex-1 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="font-extrabold text-[#003459] flex items-center gap-1">
+                      <Sparkles className="w-3.5 h-3.5 text-[#EDA415]" />
+                      Add Extra Ultrasonic Atomizer Head
+                    </span>
+                    <span className="font-black text-[#003459] bg-[#FCEED5] px-2 py-0.5 rounded-full text-[11px]">
+                      +€5.99 <span className="line-through text-gray-400 text-[10px]">€14.99</span>
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-[#667479] mt-0.5">
+                    One-time offer: Keep your Pettoh™ performing like brand new for years. Highly recommended by veterinarians.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Payment Method Selector */}
@@ -289,7 +423,7 @@ export default function CheckoutModal({
               ) : (
                 <>
                   <Lock className="w-4 h-4 text-[#FFB703]" />
-                  <span>Proceed to Payment (€{selectedBundle.price.toFixed(2)}) ➔</span>
+                  <span>Proceed to Payment (€{currentTotal.toFixed(2)}) ➔</span>
                 </>
               )}
             </button>
