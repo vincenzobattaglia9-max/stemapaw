@@ -4,6 +4,7 @@ import { useState } from 'react';
 import AnnouncementBar from '@/components/AnnouncementBar';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
+import ShippingTrustBar from '@/components/ShippingTrustBar';
 import FeatureGrid from '@/components/FeatureGrid';
 import ComparisonTable from '@/components/ComparisonTable';
 import ReviewsSection from '@/components/ReviewsSection';
@@ -34,6 +35,7 @@ export default function Home() {
           selectedVariant={selectedVariant}
           onSelectVariant={setSelectedVariant}
         />
+        <ShippingTrustBar />
         <FeatureGrid />
         <ComparisonTable />
         <ReviewsSection />

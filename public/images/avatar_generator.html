@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #003459;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 512px;
+      height: 512px;
+      overflow: hidden;
+    }
+    svg {
+      width: 320px;
+      height: 320px;
+    }
+  </style>
+</head>
+<body>
+  <svg viewBox="0 0 64 64">
+    <defs>
+      <linearGradient id="pawGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FFB703" />
+        <stop offset="100%" stop-color="#EDA415" />
+      </linearGradient>
+    </defs>
+    <!-- Main Paw Pad -->
+    <ellipse cx="32" cy="40" rx="14" ry="11" fill="url(#pawGrad)" />
+    <!-- 4 Toe Pads -->
+    <circle cx="18" cy="24" r="5.5" fill="url(#pawGrad)" />
+    <circle cx="27.5" cy="16.5" r="6" fill="url(#pawGrad)" />
+    <circle cx="36.5" cy="16.5" r="6" fill="url(#pawGrad)" />
+    <circle cx="46" cy="24" r="5.5" fill="url(#pawGrad)" />
+  </svg>
+</body>
+</html>
