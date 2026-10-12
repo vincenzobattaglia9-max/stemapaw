@@ -98,9 +98,9 @@ export const PRODUCT_DATA = {
       title: "1x Pettoh™ Pro Brush",
       subtitle: "Includes Brush, Refill Dropper & USB-C Cable",
       price: 28.00,
-      originalPrice: 56.00,
-      savings: 28.00,
-      discountBadge: "SAVE 50% TODAY"
+      originalPrice: 40.00,
+      savings: 12.00,
+      discountBadge: "SAVE 30% TODAY"
     },
     {
       id: "double",
@@ -108,9 +108,9 @@ export const PRODUCT_DATA = {
       title: "2x Pettoh™ Duo Pack",
       subtitle: "1 for Dog + 1 for Cat, or Gift a Pet Lover (Only €22.50 each)",
       price: 44.99,
-      originalPrice: 112.00,
-      savings: 67.01,
-      discountBadge: "MOST POPULAR • EXTRA 20% OFF",
+      originalPrice: 80.00,
+      savings: 35.01,
+      discountBadge: "MOST POPULAR • SAVE 44%",
       isPopular: true,
       freebie: "FREE Tracked Express EU Shipping"
     },
@@ -120,9 +120,9 @@ export const PRODUCT_DATA = {
       title: "3x Family & Multi-Pet Pack",
       subtitle: "Best Value for Multi-Pet Households (Only €19.99 each)",
       price: 59.99,
-      originalPrice: 168.00,
-      savings: 108.01,
-      discountBadge: "BEST VALUE • 64% SAVINGS",
+      originalPrice: 120.00,
+      savings: 60.01,
+      discountBadge: "BEST VALUE • SAVE 50%",
       freebie: "FREE Detangling Pet Glove Included"
     }
   ] as BundleTier[],

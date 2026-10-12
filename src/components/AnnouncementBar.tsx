@@ -3,7 +3,7 @@
 import { Sparkles, ShieldCheck, Heart } from 'lucide-react';
 
 const TICKER_ITEMS = [
-  { icon: '🐾', text: 'Spring Offer: 50% OFF + FREE Tracked Delivery across Europe (6-9 Days)' },
+  { icon: '🐾', text: 'Spring Offer: Up to 50% OFF + FREE Tracked Delivery across Europe (6-9 Days)' },
   { icon: '⭐️', text: 'Rated 4.9/5 by 2,480+ European Pet Parents' },
   { icon: '🛡️', text: 'Official 30-Day Money-Back Guarantee' },
   { icon: '🇩🇪', text: 'Lieferung nach Deutschland: 6-8 Werktage' },

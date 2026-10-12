@@ -56,7 +56,7 @@ export default function StickyBottomCta({
         <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
           <div className="text-left sm:text-right">
             <span className="text-[10px] uppercase font-bold text-[#EDA415] tracking-wider block">
-              Spring 50% Off
+              Spring Sale
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="text-base sm:text-lg font-black text-[#003459]">
@@ -73,7 +73,7 @@ export default function StickyBottomCta({
             className="btn-spring bg-[#003459] hover:bg-[#002A48] text-white font-black text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg shadow-[#003459]/25 flex items-center gap-2 animate-glow-pulse"
           >
             <ShoppingBag className="w-4 h-4 text-[#FFB703]" />
-            <span>Claim 50% Off Now</span>
+            <span>Claim Discount Now</span>
           </button>
         </div>
 

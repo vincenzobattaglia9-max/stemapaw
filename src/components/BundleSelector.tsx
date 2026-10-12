@@ -182,7 +182,7 @@ export default function BundleSelector({
         className="btn-spring w-full bg-[#003459] hover:bg-[#002A48] text-white font-black text-base sm:text-lg py-4 px-6 rounded-full shadow-lg shadow-[#003459]/25 flex flex-col items-center justify-center gap-0.5 animate-glow-pulse group"
       >
         <span className="flex items-center gap-2 tracking-wide uppercase">
-          <span>Claim 50% Off &amp; Checkout Now</span>
+          <span>Claim Discount &amp; Checkout Now</span>
           <span className="transition-transform group-hover:translate-x-1">➔</span>
         </span>
         <span className="text-xs font-normal text-[#FCEED5]">
