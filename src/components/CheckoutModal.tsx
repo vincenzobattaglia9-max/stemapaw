@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { BundleTier, ProductVariant } from '@/data/productData';
-import { X, ShieldCheck, Lock, Truck, Loader2, AlertCircle, Sparkles, Check } from 'lucide-react';
+import { X, ShieldCheck, Lock, Truck, Loader2, AlertCircle } from 'lucide-react';
 import { trackInitiateCheckout } from '@/lib/analytics';
 
 interface CheckoutModalProps {
@@ -21,7 +21,6 @@ let persistedForm = {
   postalCode: '',
   country: 'Germany 🇩🇪',
   paymentMethod: 'Credit Card (Stripe)',
-  orderBumpSelected: true, // Default to true for AOV maximization
 };
 
 export default function CheckoutModal({
@@ -48,25 +47,23 @@ export default function CheckoutModal({
       trackInitiateCheckout({
         id: selectedBundle.id,
         name: `${selectedBundle.title} (${selectedVariant.name})`,
-        price: formData.orderBumpSelected ? selectedBundle.price + 5.99 : selectedBundle.price,
+        price: selectedBundle.price,
         quantity: selectedBundle.quantity,
         currency: 'EUR',
       });
     }
-  }, [isOpen, selectedBundle, selectedVariant, formData.orderBumpSelected]);
+  }, [isOpen, selectedBundle, selectedVariant]);
 
   if (!isOpen) return null;
 
-  const currentTotal = formData.orderBumpSelected
-    ? selectedBundle.price + 5.99
-    : selectedBundle.price;
+  const currentTotal = selectedBundle.price;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage(null);
 
-    // Track checkout initiate again on submit with actual email captured
+    // Track checkout initiate on submit with actual email captured
     trackInitiateCheckout({
       id: selectedBundle.id,
       name: `${selectedBundle.title} (${selectedVariant.name})`,
@@ -90,7 +87,6 @@ export default function CheckoutModal({
           variantName: selectedVariant.name,
           quantity: selectedBundle.quantity,
           totalAmount: selectedBundle.price,
-          orderBumpSelected: formData.orderBumpSelected,
           paymentMethod: formData.paymentMethod,
         }),
       });
@@ -122,7 +118,6 @@ export default function CheckoutModal({
           postalCode: '',
           country: 'Germany 🇩🇪',
           paymentMethod: 'Credit Card (Stripe)', 
-          orderBumpSelected: true 
         };
       }
 
@@ -199,12 +194,6 @@ export default function CheckoutModal({
                 <span className="text-[#667479]">Bundle:</span>
                 <span className="font-bold text-[#003459]">{selectedBundle.title} — {selectedVariant.name}</span>
               </div>
-              {formData.orderBumpSelected && (
-                <div className="flex justify-between text-xs text-[#003459] font-bold">
-                  <span>+ Extra Atomizer Head:</span>
-                  <span>€5.99</span>
-                </div>
-              )}
               <div className="flex justify-between">
                 <span className="text-[#667479]">Total Paid:</span>
                 <span className="font-black text-[#003459]">€{currentTotal.toFixed(2)}</span>
@@ -338,38 +327,6 @@ export default function CheckoutModal({
                   <option value="Sweden 🇸🇪">Sweden 🇸🇪</option>
                   <option value="United Kingdom 🇬🇧">United Kingdom 🇬🇧</option>
                 </select>
-              </div>
-            </div>
-
-            {/* ORDER BUMP SECTION (CRO / AOV Maximizer) */}
-            <div 
-              onClick={() => updateField('orderBumpSelected', !formData.orderBumpSelected)}
-              className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${
-                formData.orderBumpSelected
-                  ? 'border-[#003459] bg-[#FCEED5]/40 shadow-sm'
-                  : 'border-dashed border-gray-300 bg-gray-50/60 hover:border-gray-400'
-              }`}
-            >
-              <div className="flex items-start gap-3">
-                <div className={`w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${
-                  formData.orderBumpSelected ? 'bg-[#003459] text-white' : 'border border-gray-300 bg-white'
-                }`}>
-                  {formData.orderBumpSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                </div>
-                <div className="flex-1 text-xs">
-                  <div className="flex items-center justify-between">
-                    <span className="font-extrabold text-[#003459] flex items-center gap-1">
-                      <Sparkles className="w-3.5 h-3.5 text-[#EDA415]" />
-                      Add Extra Ultrasonic Atomizer Head
-                    </span>
-                    <span className="font-black text-[#003459] bg-[#FCEED5] px-2 py-0.5 rounded-full text-[11px]">
-                      +€5.99 <span className="line-through text-gray-400 text-[10px]">€14.99</span>
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-[#667479] mt-0.5">
-                    One-time offer: Keep your Pettoh™ performing like brand new for years. Highly recommended by veterinarians.
-                  </p>
-                </div>
               </div>
             </div>
 
