@@ -8,3 +8,11 @@ chrome/
 ecommerce.db
 *.log
 .DS_Store
+
+# Video and large media assets (keep locally, not in git)
+videos/
+*.mp4
+*.mov
+*.avi
+*.mkv
+public/images/avatar_generator.html
