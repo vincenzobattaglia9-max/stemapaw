@@ -190,17 +190,37 @@ export default function BundleSelector({
         </span>
       </button>
 
+      {/* Carrier & Local Trust (Crucial for DE & NL Buyers) */}
+      <div className="bg-white rounded-2xl p-3 border border-gray-200/80 shadow-2xs space-y-2">
+        <div className="flex items-center justify-between text-[11px] font-extrabold text-[#003459] border-b border-gray-100 pb-2">
+          <span className="flex items-center gap-1.5">
+            <span>🚚</span>
+            <span>Dispatched via National Carriers:</span>
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="bg-[#FFCC00]/25 text-[#990000] font-black px-2 py-0.5 rounded text-[10px] border border-[#FFCC00]/50">DHL Paket 🇩🇪</span>
+            <span className="bg-[#ED5C17]/15 text-[#ED5C17] font-black px-2 py-0.5 rounded text-[10px] border border-[#ED5C17]/30">PostNL 🇳🇱</span>
+          </div>
+        </div>
+        <div className="flex items-center justify-between text-[11px] text-[#667479]">
+          <span className="flex items-center gap-1">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <strong className="text-gray-900">Try At Home First:</strong> 30-Day Free Return Policy
+          </span>
+          <span className="text-[#003459] font-bold text-[10px] bg-[#FCEED5] px-2 py-0.5 rounded-full">
+            🛍️ Klarna Pay in 30 Days Active
+          </span>
+        </div>
+      </div>
+
       {/* Payment Security */}
-      <div className="pt-1 text-center">
-        <p className="text-[11px] uppercase tracking-wider text-[#667479] font-black mb-2">
-          Secure European Payment Encryption
-        </p>
-        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap text-xs font-bold text-[#003459]">
-          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs hover:scale-105 transition-transform">💳 Cards</span>
-          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs hover:scale-105 transition-transform"> Apple Pay</span>
-          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs hover:scale-105 transition-transform">GPay</span>
-          <span className="bg-[#FFB703]/20 text-[#003459] border border-[#FFB703]/40 px-2.5 py-1 rounded-full hover:scale-105 transition-transform">Klarna.</span>
-          <span className="bg-[#FCEED5] text-[#003459] border border-[#F7DBA7] px-2.5 py-1 rounded-full hover:scale-105 transition-transform">iDEAL</span>
+      <div className="pt-0.5 text-center">
+        <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap text-xs font-bold text-[#003459]">
+          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs">💳 Visa / Mastercard</span>
+          <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-2xs"> Apple Pay</span>
+          <span className="bg-pink-50 text-pink-900 border border-pink-200 px-2.5 py-1 rounded-full shadow-2xs font-black">Klarna.</span>
+          <span className="bg-orange-50 text-[#ED5C17] border border-orange-200 px-2.5 py-1 rounded-full shadow-2xs font-black">iDEAL 🇳🇱</span>
+          <span className="bg-blue-50 text-blue-900 border border-blue-200 px-2.5 py-1 rounded-full shadow-2xs">PayPal</span>
         </div>
       </div>
 

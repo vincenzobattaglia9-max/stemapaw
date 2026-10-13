@@ -332,27 +332,37 @@ export default function CheckoutModal({
 
             {/* Payment Method Selector */}
             <div className="space-y-2">
-              <h4 className="text-xs font-black uppercase tracking-wider text-[#003459]">
-                Step 2: Preferred Payment Method
-              </h4>
+              <div className="flex items-center justify-between">
+                <h4 className="text-xs font-black uppercase tracking-wider text-[#003459]">
+                  Step 2: Preferred Payment Method
+                </h4>
+                <span className="text-[10px] font-bold text-pink-700 bg-pink-50 border border-pink-200 px-2 py-0.5 rounded-full">
+                  🛍️ Pay after delivery with Klarna
+                </span>
+              </div>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 {[
-                  { name: 'Credit Card (Stripe)', label: '💳 Cards / Apple Pay' },
-                  { name: 'Klarna Pay Later', label: '🛍️ Klarna (30 days)' },
-                  { name: 'iDEAL Payment', label: '🏦 iDEAL (NL)' },
-                  { name: 'PayPal Direct', label: '🅿️ PayPal' },
+                  { name: 'Credit Card (Stripe)', label: '💳 Cards / Apple Pay', badge: '' },
+                  { name: 'Klarna Pay Later', label: '🛍️ Klarna (Pay in 30d)', badge: 'Most Popular DE' },
+                  { name: 'iDEAL Payment', label: '🏦 iDEAL Banking', badge: 'Standard NL' },
+                  { name: 'PayPal Direct', label: '🅿️ PayPal Checkout', badge: 'Buyer Protection' },
                 ].map((m) => (
                   <button
                     key={m.name}
                     type="button"
                     onClick={() => updateField('paymentMethod', m.name)}
-                    className={`btn-spring p-3 rounded-xl border font-bold text-left transition-all ${
+                    className={`btn-spring p-3 rounded-xl border font-bold text-left transition-all relative ${
                       formData.paymentMethod === m.name
                         ? 'border-[#003459] bg-[#FCEED5]/50 text-[#003459] ring-2 ring-[#003459]/15'
                         : 'border-gray-200 text-[#667479] hover:border-gray-300'
                     }`}
                   >
-                    {m.label}
+                    <div>{m.label}</div>
+                    {m.badge && (
+                      <span className="text-[9px] font-extrabold text-[#003459] opacity-70 block mt-0.5">
+                        ✓ {m.badge}
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
