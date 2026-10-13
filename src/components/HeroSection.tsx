@@ -237,8 +237,9 @@ export default function HeroSection({
           <div className="lg:col-span-6 space-y-6">
             
             <div>
-              <div className="inline-block bg-[#FCEED5] text-[#003459] text-xs font-black px-3 py-1 rounded-full mb-2">
-                SKU: PT-PRO-2026 • IN STOCK (EU)
+              <div className="inline-flex items-center gap-1.5 bg-[#FCEED5] text-[#003459] text-xs font-black px-3.5 py-1 rounded-full mb-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>IN STOCK (EU) • OFFICIAL STORE</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-[#003459] tracking-tight">
                 {PRODUCT_DATA.productName}
