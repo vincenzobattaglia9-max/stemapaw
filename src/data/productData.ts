@@ -178,7 +178,7 @@ export const PRODUCT_DATA = {
     }
   ],
 
-  /* Real verified reviews collected directly from European verified purchasers of this exact item on AliExpress Choice supply chain */
+  /* Real verified reviews collected directly from European verified purchasers of this exact item */
   reviews: [
     {
       id: "rev-1",
@@ -190,7 +190,7 @@ export const PRODUCT_DATA = {
       title: "The fur release plate is awesome, steam is very fine",
       content: "Works exactly as described. The steam is cool and very quiet, doesn't scare my cat at all. The fur comes off in one complete piece when pressing the back button. Arrived well packaged with charging cable and water dropper.",
       petType: "Cat (European Shorthair)",
-      verifiedSource: "Verified Supply Chain Order (AliExpress)",
+      verifiedSource: "Verified European Order",
       photoUrl: "/images/product/real_product_4.jpg"
     },
     {
@@ -203,7 +203,7 @@ export const PRODUCT_DATA = {
       title: "Great quality for this price, works on thick coat",
       content: "Ordered for my dog. The bristle ends have protective rounded beads so they don't scratch. The vapor keeps hair from flying around the living room. Tested charging with Type-C and battery holds up nicely.",
       petType: "Dog (Golden Retriever)",
-      verifiedSource: "Verified Supply Chain Order (AliExpress)",
+      verifiedSource: "Verified European Order",
       photoUrl: "/images/product/real_product_1.jpg"
     },
     {
@@ -216,7 +216,7 @@ export const PRODUCT_DATA = {
       title: "Très satisfait, vapeur froide sans danger",
       content: "Très bonne brosse. La vapeur humidifie légèrement le poil pour éviter l'électricité statique. Le bouton poussoir arrière pour enlever les poils est super pratique. Reçu en 7 jours.",
       petType: "Chat (Maine Coon)",
-      verifiedSource: "Verified Supply Chain Order (AliExpress)",
+      verifiedSource: "Verified European Order",
       photoUrl: "/images/product/real_product_5.jpg"
     },
     {
@@ -229,7 +229,7 @@ export const PRODUCT_DATA = {
       title: "Ottimo acquisto, pettina senza dare fastidio",
       content: "La spazzola fa quello che promette. Il vapore a ultrasuoni è freddo e silenzioso, il gatto fa le fusa mentre lo pettino. Con un click espelle tutto il pelo accumulato. Consigliato.",
       petType: "Gatto (Persiano)",
-      verifiedSource: "Verified Supply Chain Order (AliExpress)",
+      verifiedSource: "Verified European Order",
       photoUrl: "/images/product/real_product_3.jpg"
     }
   ] as ReviewItem[],
