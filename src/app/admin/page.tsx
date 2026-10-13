@@ -42,6 +42,17 @@ interface DailyAdEntry {
 
 const DEFAULT_METRIC_ENTRIES: DailyAdEntry[] = [
   {
+    id: 'entry-2',
+    date: '2026-10-13',
+    spend: 8.29,
+    impressions: 609,
+    reach: 486,
+    linkClicks: 32,
+    cpc: 0.26,
+    cpm: 13.61,
+    notes: 'Outstanding scaling: 55-64 age segment exploded with 6.7% CTR. CPC dropped to 0.26€.'
+  },
+  {
     id: 'entry-1',
     date: '2026-10-12',
     spend: 8.12,
