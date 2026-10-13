@@ -95,11 +95,27 @@ export default function AdminPage() {
       setIsAuthenticated(true);
     }
 
-    // Load ad records from localStorage
+    // Load ad records from localStorage and merge with latest DEFAULT_METRIC_ENTRIES
     const saved = localStorage.getItem('pettoh_ad_entries');
     if (saved) {
       try {
-        setAdEntries(JSON.parse(saved));
+        const parsed: DailyAdEntry[] = JSON.parse(saved);
+        // Merge: take all default entries, and any user custom added entries that have different dates
+        const existingDates = new Set(parsed.map(p => p.date));
+        const merged = [...parsed];
+        for (const def of DEFAULT_METRIC_ENTRIES) {
+          if (!existingDates.has(def.date)) {
+            merged.unshift(def);
+          } else {
+            // Update the entry if default has fresher data
+            const index = merged.findIndex(m => m.date === def.date);
+            if (index !== -1 && merged[index].spend !== def.spend) {
+              merged[index] = def;
+            }
+          }
+        }
+        setAdEntries(merged);
+        localStorage.setItem('pettoh_ad_entries', JSON.stringify(merged));
       } catch (e) {
         setAdEntries(DEFAULT_METRIC_ENTRIES);
       }
