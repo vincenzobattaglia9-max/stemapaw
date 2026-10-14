@@ -72,37 +72,65 @@ export default function Navbar({ onOpenCheckout, cartCount }: NavbarProps) {
             </Link>
           </nav>
 
-          {/* Right Actions: Currency, Admin & CTA */}
+          {/* Right Actions: Language Selector, Currency & CTA */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             
-            {/* Language Selector Pill */}
-            <div className="flex items-center bg-white/90 border border-gray-200/90 rounded-full p-0.5 text-xs font-bold text-[#003459] shadow-2xs">
+            {/* Real SVG Country Flag Language Selector */}
+            <div className="flex items-center bg-white/95 border border-gray-200 rounded-full p-1 text-xs font-black text-[#003459] shadow-2xs gap-0.5">
               <button
                 onClick={() => setLanguage('de')}
-                className={`px-2 py-1 rounded-full transition-all ${
-                  language === 'de' ? 'bg-[#003459] text-white shadow-xs' : 'hover:bg-gray-100 text-gray-700'
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all ${
+                  language === 'de'
+                    ? 'bg-[#003459] text-white shadow-xs'
+                    : 'hover:bg-gray-100 text-gray-700'
                 }`}
-                title="Deutsch"
+                title="Deutschland (Deutsch)"
               >
-                🇩🇪 DE
+                {/* Germany SVG Flag */}
+                <svg className="w-4 h-3 rounded-[2px] shadow-2xs overflow-hidden flex-shrink-0" viewBox="0 0 640 480">
+                  <path fill="#000" d="M0 0h640v160H0z"/>
+                  <path fill="#D00" d="M0 160h640v160H0z"/>
+                  <path fill="#FFCE00" d="M0 320h640v160H0z"/>
+                </svg>
+                <span>DE</span>
               </button>
+
               <button
                 onClick={() => setLanguage('nl')}
-                className={`px-2 py-1 rounded-full transition-all ${
-                  language === 'nl' ? 'bg-[#003459] text-white shadow-xs' : 'hover:bg-gray-100 text-gray-700'
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all ${
+                  language === 'nl'
+                    ? 'bg-[#003459] text-white shadow-xs'
+                    : 'hover:bg-gray-100 text-gray-700'
                 }`}
-                title="Nederlands"
+                title="Nederland (Nederlands)"
               >
-                🇳🇱 NL
+                {/* Netherlands SVG Flag */}
+                <svg className="w-4 h-3 rounded-[2px] shadow-2xs overflow-hidden flex-shrink-0" viewBox="0 0 640 480">
+                  <path fill="#AE1C28" d="M0 0h640v160H0z"/>
+                  <path fill="#FFFFFF" d="M0 160h640v160H0z"/>
+                  <path fill="#21468B" d="M0 320h640v160H0z"/>
+                </svg>
+                <span>NL</span>
               </button>
+
               <button
                 onClick={() => setLanguage('en')}
-                className={`px-2 py-1 rounded-full transition-all ${
-                  language === 'en' ? 'bg-[#003459] text-white shadow-xs' : 'hover:bg-gray-100 text-gray-700'
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all ${
+                  language === 'en'
+                    ? 'bg-[#003459] text-white shadow-xs'
+                    : 'hover:bg-gray-100 text-gray-700'
                 }`}
-                title="English"
+                title="English (Europe)"
               >
-                🇬🇧 EN
+                {/* UK SVG Flag */}
+                <svg className="w-4 h-3 rounded-[2px] shadow-2xs overflow-hidden flex-shrink-0" viewBox="0 0 640 480">
+                  <path fill="#012169" d="M0 0h640v480H0z"/>
+                  <path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-179L0 64V0h75z"/>
+                  <path fill="#C8102E" d="m424 288 216 159v33h-44L380 318l44-30zM640 0v10L456 148l40 28L640 70V0zM0 480v-11l183-137-39-30L0 411v69zM0 0l215 160-40 30L0 60V0z"/>
+                  <path fill="#FFF" d="M240 0v480h160V0H240zM0 160v160h640V160H0z"/>
+                  <path fill="#C8102E" d="M267 0v480h106V0H267zM0 187v106h640V187H0z"/>
+                </svg>
+                <span>EN</span>
               </button>
             </div>
 

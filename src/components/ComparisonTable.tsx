@@ -1,11 +1,40 @@
 'use client';
 
-import { PRODUCT_DATA } from '@/data/productData';
 import { Check, X } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useAnimations';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ComparisonTable() {
+  const { t } = useLanguage();
   const tableRevealRef = useScrollReveal(0.12, 80);
+
+  const rows = [
+    {
+      feature: t.comparison.row1Feature,
+      ourProduct: t.comparison.row1Pettoh,
+      competitor: t.comparison.row1Others,
+    },
+    {
+      feature: t.comparison.row2Feature,
+      ourProduct: t.comparison.row2Pettoh,
+      competitor: t.comparison.row2Others,
+    },
+    {
+      feature: t.comparison.row3Feature,
+      ourProduct: t.comparison.row3Pettoh,
+      competitor: t.comparison.row3Others,
+    },
+    {
+      feature: t.comparison.row4Feature,
+      ourProduct: t.comparison.row4Pettoh,
+      competitor: t.comparison.row4Others,
+    },
+    {
+      feature: t.comparison.row5Feature,
+      ourProduct: t.comparison.row5Pettoh,
+      competitor: t.comparison.row5Others,
+    },
+  ];
 
   return (
     <section id="comparison" className="py-16 sm:py-24 bg-white border-y border-gray-100 overflow-hidden">
@@ -13,27 +42,27 @@ export default function ComparisonTable() {
         
         <div className="text-center mb-12">
           <span className="text-xs font-black uppercase tracking-widest text-[#003459] bg-[#FCEED5] px-3.5 py-1 rounded-full">
-            The Pettoh™ Difference
+            {t.comparison.tag}
           </span>
           <h2 className="mt-3 text-2xl sm:text-4xl font-black text-[#003459] tracking-tight">
-            Pettoh™ vs Ordinary Wire Brushes
+            {t.comparison.title}
           </h2>
           <p className="mt-2 text-sm text-[#667479]">
-            Why thousands of European pet owners are leaving sharp metal bristles behind.
+            {t.comparison.subtitle}
           </p>
         </div>
 
         <div className="bg-[#FDFBF8] rounded-[28px] shadow-monito border border-gray-200 overflow-hidden">
           <div className="grid grid-cols-12 bg-[#FCEED5] p-4 sm:p-5 border-b border-[#F7DBA7] text-xs sm:text-sm font-black text-[#003459] uppercase tracking-wider">
-            <div className="col-span-5 sm:col-span-6">Feature &amp; Safety</div>
+            <div className="col-span-5 sm:col-span-6">{t.comparison.headerFeature}</div>
             <div className="col-span-4 sm:col-span-3 text-[#003459] flex items-center gap-1.5 font-black">
-              <span>🐾 Pettoh™</span>
+              <span>{t.comparison.headerPettoh}</span>
             </div>
-            <div className="col-span-3 text-[#667479]">Wire Brushes</div>
+            <div className="col-span-3 text-[#667479]">{t.comparison.headerOthers}</div>
           </div>
 
           <div className="divide-y divide-gray-100 text-xs sm:text-sm bg-white">
-            {PRODUCT_DATA.comparisons.map((item, index) => (
+            {rows.map((item, index) => (
               <div 
                 key={index} 
                 className="stagger-item grid grid-cols-12 p-4 sm:p-5 items-center hover:bg-[#FCEED5]/25 transition-colors duration-200"

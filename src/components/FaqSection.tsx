@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { PRODUCT_DATA } from '@/data/productData';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useAnimations';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function FaqSection() {
+  const { t } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const faqRevealRef = useScrollReveal(0.12, 60);
 
@@ -22,15 +23,15 @@ export default function FaqSection() {
             <HelpCircle className="w-6 h-6 text-[#003459]" />
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-[#003459] tracking-tight">
-            Frequently Asked Questions
+            {t.faq.title}
           </h2>
           <p className="mt-2 text-sm text-[#667479]">
-            Everything you need to know about Pettoh™ and European priority shipping.
+            {t.faq.subtitle}
           </p>
         </div>
 
         <div className="space-y-3.5">
-          {PRODUCT_DATA.faqs.map((faq, index) => {
+          {t.faq.items.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div

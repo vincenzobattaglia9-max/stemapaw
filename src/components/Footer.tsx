@@ -2,8 +2,14 @@
 
 import Link from 'next/link';
 import { Heart, ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Footer() {
+  const { language } = useLanguage();
+
+  const isDe = language === 'de';
+  const isNl = language === 'nl';
+
   return (
     <footer className="bg-[#FCEED5] rounded-t-[40px] sm:rounded-t-[60px] pt-14 pb-10 border-t border-[#F7DBA7]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -17,10 +23,18 @@ export default function Footer() {
                 Pettoh™ Community
               </span>
               <h3 className="text-xl sm:text-3xl font-black">
-                Join 10,000+ Happy European Pet Parents
+                {isDe 
+                  ? 'Über 10.000 zufriedene Haustierbesitzer in Europa' 
+                  : isNl 
+                    ? 'Sluit je aan bij meer dan 10.000 tevreden baasjes' 
+                    : 'Join 10,000+ Happy European Pet Parents'}
               </h3>
               <p className="text-xs sm:text-sm text-gray-300">
-                Receive weekly pet wellness tips, grooming secrets, and exclusive member discounts.
+                {isDe 
+                  ? 'Erhalten Sie wöchentlich wertvolle Pflegetipps und exklusive VIP-Angebote.' 
+                  : isNl 
+                    ? 'Ontvang wekelijks nuttige verzorgingstips en exclusieve ledenkortingen.' 
+                    : 'Receive weekly pet wellness tips, grooming secrets, and exclusive member discounts.'}
               </p>
             </div>
 
@@ -28,11 +42,11 @@ export default function Footer() {
               <div className="bg-white p-2 rounded-full flex flex-col sm:flex-row gap-2 shadow-md">
                 <input
                   type="email"
-                  placeholder="Enter your email address..."
+                  placeholder={isDe ? 'Ihre E-Mail-Adresse...' : isNl ? 'Je e-mailadres...' : 'Enter your email address...'}
                   className="flex-1 px-4 py-2.5 text-xs sm:text-sm rounded-full text-[#003459] focus:outline-none placeholder:text-gray-400"
                 />
                 <button className="bg-[#003459] hover:bg-[#002A48] text-white font-black text-xs sm:text-sm px-6 py-3 rounded-full transition-all flex items-center justify-center gap-1.5 flex-shrink-0">
-                  <span>Subscribe</span>
+                  <span>{isDe ? 'Anmelden' : isNl ? 'Aanmelden' : 'Subscribe'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -60,30 +74,38 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs text-[#667479] max-w-sm leading-relaxed">
-              Pettoh™ Europe is dedicated to providing high quality, gentle grooming gadgets for dogs and cats across the European Union.
+              {isDe 
+                ? 'Pettoh™ ist spezialisiert auf sanfte, innovative Haustierpflegegeräte für Hunde und Katzen in ganz Europa.' 
+                : isNl 
+                  ? 'Pettoh™ is toegewijd aan zachte, innovatieve verzorgingsgadgets voor honden en katten in Europa.' 
+                  : 'Pettoh™ Europe is dedicated to providing high quality, gentle grooming gadgets for dogs and cats across the European Union.'}
             </p>
             <div className="flex items-center gap-2 text-xs text-[#003459] font-bold">
-              <span>Tracked Delivery across:</span>
-              <span>🇩🇪 🇫🇷 🇳🇱 🇮🇹 🇪🇸 🇦🇹 🇸🇪 🇧🇪 🇬🇧 🇪🇺</span>
+              <span>{isDe ? 'Versandpartner:' : isNl ? 'Bezorgpartners:' : 'Tracked Delivery:'}</span>
+              <span className="font-extrabold text-[#003459]">DHL Paket · PostNL · DPD · UPS</span>
             </div>
           </div>
 
           <div>
-            <h5 className="font-black text-[#003459] text-xs uppercase tracking-wider mb-3">Explore</h5>
+            <h5 className="font-black text-[#003459] text-xs uppercase tracking-wider mb-3">
+              {isDe ? 'Menü' : isNl ? 'Navigatie' : 'Explore'}
+            </h5>
             <ul className="space-y-2 text-xs font-bold text-[#667479]">
-              <li><a href="#buy-now" className="hover:text-[#003459] transition-colors">Pettoh™ Pro Brush</a></li>
-              <li><Link href="/track" className="hover:text-[#003459] transition-colors">Track European Order</Link></li>
-              <li><a href="#reviews" className="hover:text-[#003459] transition-colors">Verified Customer Reviews</a></li>
+              <li><a href="#buy-now" className="hover:text-[#003459] transition-colors">{isDe ? 'Pettoh™ Pro Bürste' : isNl ? 'Pettoh™ Pro Borstel' : 'Pettoh™ Pro Brush'}</a></li>
+              <li><Link href="/track" className="hover:text-[#003459] transition-colors">{isDe ? 'Paket online verfolgen' : isNl ? 'Pakket volgen' : 'Track European Order'}</Link></li>
+              <li><a href="#reviews" className="hover:text-[#003459] transition-colors">{isDe ? 'Kundenbewertungen (4.8/5)' : isNl ? 'Klantbeoordelingen (4.8/5)' : 'Verified Customer Reviews'}</a></li>
             </ul>
           </div>
 
           <div>
-            <h5 className="font-black text-[#003459] text-xs uppercase tracking-wider mb-3">EU Consumer Rights</h5>
+            <h5 className="font-black text-[#003459] text-xs uppercase tracking-wider mb-3">
+              {isDe ? 'Rechtliches & Schutz' : isNl ? 'Consumentenrecht' : 'EU Consumer Rights'}
+            </h5>
             <ul className="space-y-2 text-xs font-bold text-[#667479]">
-              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">EU 30-Day Money-Back Guarantee</Link></li>
-              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">GDPR Privacy &amp; Cookie Policy</Link></li>
-              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">Omnibus Review Verification Notice</Link></li>
-              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">Terms of Service &amp; Impressum</Link></li>
+              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">{isDe ? '30 Tage Geld-zurück-Garantie' : isNl ? '30 Dagen niet-goed-geld-terug' : 'EU 30-Day Money-Back Guarantee'}</Link></li>
+              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">{isDe ? 'Datenschutz & Cookies (DSGVO)' : isNl ? 'Privacybeleid (AVG/GDPR)' : 'GDPR Privacy & Cookie Policy'}</Link></li>
+              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">{isDe ? 'EU Omnibus Bewertungsrichtlinie' : isNl ? 'Omnibus Beoordelingsbeleid' : 'Omnibus Review Verification Notice'}</Link></li>
+              <li><Link href="/legal" className="hover:text-[#003459] transition-colors">{isDe ? 'Impressum & AGB' : isNl ? 'Algemene Voorwaarden' : 'Terms of Service & Impressum'}</Link></li>
             </ul>
           </div>
 
