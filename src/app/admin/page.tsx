@@ -42,6 +42,17 @@ interface DailyAdEntry {
 
 const DEFAULT_METRIC_ENTRIES: DailyAdEntry[] = [
   {
+    id: 'entry-3',
+    date: '2026-10-14',
+    spend: 8.27,
+    impressions: 540,
+    reach: 430,
+    linkClicks: 10,
+    cpc: 0.83,
+    cpm: 15.31,
+    notes: 'Domain updated to pettoh.com. Senior audience 65+ drove the lowest click costs (0.43€).'
+  },
+  {
     id: 'entry-2',
     date: '2026-10-13',
     spend: 8.29,
