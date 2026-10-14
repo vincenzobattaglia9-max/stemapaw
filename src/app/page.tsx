@@ -13,6 +13,7 @@ import Footer from '@/components/Footer';
 import CheckoutModal from '@/components/CheckoutModal';
 import StickyBottomCta from '@/components/StickyBottomCta';
 import { PRODUCT_DATA, BundleTier, ProductVariant } from '@/data/productData';
+import { LanguageProvider } from '@/context/LanguageContext';
 
 export default function Home() {
   const [selectedBundle, setSelectedBundle] = useState<BundleTier>(PRODUCT_DATA.bundles[1]); // Default to popular duo pack
@@ -20,12 +21,13 @@ export default function Home() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col selection:bg-emerald-200 selection:text-emerald-900">
-      <AnnouncementBar />
-      <Navbar
-        onOpenCheckout={() => setIsCheckoutOpen(true)}
-        cartCount={selectedBundle.quantity}
-      />
+    <LanguageProvider>
+      <div className="min-h-screen flex flex-col selection:bg-emerald-200 selection:text-emerald-900">
+        <AnnouncementBar />
+        <Navbar
+          onOpenCheckout={() => setIsCheckoutOpen(true)}
+          cartCount={selectedBundle.quantity}
+        />
       
       <main className="flex-grow">
         <HeroSection
@@ -56,5 +58,6 @@ export default function Home() {
         selectedVariant={selectedVariant}
       />
     </div>
+  </LanguageProvider>
   );
 }

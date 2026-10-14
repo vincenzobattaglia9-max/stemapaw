@@ -5,6 +5,7 @@ import { PRODUCT_DATA, BundleTier, ProductVariant } from '@/data/productData';
 import BundleSelector from './BundleSelector';
 import { Star, Play, Sparkles } from 'lucide-react';
 import { useScrollReveal, useCountUp, useParallax } from '@/hooks/useAnimations';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface HeroSectionProps {
   onOpenCheckout: () => void;
@@ -21,6 +22,7 @@ export default function HeroSection({
   selectedVariant,
   onSelectVariant,
 }: HeroSectionProps) {
+  const { t } = useLanguage();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
@@ -58,18 +60,17 @@ export default function HeroSection({
               <div className="stagger-item inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm border border-[#F7DBA7] px-4 py-1.5 rounded-full shadow-2xs hover:scale-105 transition-transform duration-300">
                 <span className="text-base">🐾</span>
                 <span className="text-xs font-black uppercase tracking-wider text-[#003459]">
-                  Pettoh™ • Ultrasonic Grooming Innovation
+                  {t.hero.badge}
                 </span>
               </div>
 
               <h1 className="stagger-item text-3xl sm:text-5xl lg:text-6xl font-black text-[#003459] tracking-tight leading-[1.12]">
-                One More Friend, <br />
-                <span className="shimmer-text">Thousands More Fun!</span>
+                {t.hero.titlePart1} <br />
+                <span className="shimmer-text">{t.hero.titlePart2}</span>
               </h1>
 
               <p className="stagger-item text-base sm:text-lg text-[#242B33] font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Having a pet brings pure happiness, but flying fur on clothes and furniture doesn't have to. 
-                Meet <strong className="text-[#003459]">Pettoh™ Pro</strong>: the self-cleaning ultrasonic steamy brush dogs &amp; cats adore.
+                {t.hero.subtitle}
               </p>
 
               {/* Action Buttons */}
@@ -78,7 +79,7 @@ export default function HeroSection({
                   href="#buy-now"
                   className="btn-spring bg-[#003459] hover:bg-[#002A48] text-white font-extrabold text-sm sm:text-base px-8 py-4 rounded-full shadow-lg shadow-[#003459]/25 flex items-center gap-2 group"
                 >
-                  <span>Explore Product (50% Off)</span>
+                  <span>{t.hero.exploreCta}</span>
                   <span className="text-lg transition-transform duration-300 group-hover:translate-x-1.5">➔</span>
                 </a>
 
@@ -89,7 +90,7 @@ export default function HeroSection({
                   <div className="w-6 h-6 rounded-full bg-[#003459] text-white flex items-center justify-center">
                     <Play className="w-3 h-3 fill-white ml-0.5" />
                   </div>
-                  <span>View How It Works</span>
+                  <span>{t.hero.howItWorks}</span>
                 </a>
               </div>
 
@@ -101,7 +102,7 @@ export default function HeroSection({
                   ))}
                 </div>
                 <span className="text-xs sm:text-sm font-bold text-[#003459]">
-                  4.8 / 5.0 Rating • Verified European Buyers
+                  {t.hero.statsRating} • {t.hero.statsReviews}
                 </span>
               </div>
 
@@ -123,8 +124,8 @@ export default function HeroSection({
                     ⭐️
                   </div>
                   <div>
-                    <div className="text-xs font-black text-[#003459]">Trending Pet Innovation</div>
-                    <div className="text-[10px] text-[#667479]">Cat &amp; Dog Approved</div>
+                    <div className="text-xs font-black text-[#003459]">{t.hero.statsSales}</div>
+                    <div className="text-[10px] text-[#667479]">Hunde &amp; Katzen Zulassung</div>
                   </div>
                 </div>
 
@@ -134,8 +135,8 @@ export default function HeroSection({
                     <Sparkles className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="text-xs font-black text-white">99% Less Flying Fur</div>
-                    <div className="text-[10px] text-[#FCEED5]">Ultrasonic Nano-Mist</div>
+                    <div className="text-xs font-black text-white">{t.hero.lessFur}</div>
+                    <div className="text-[10px] text-[#FCEED5]">{t.hero.nanoMist}</div>
                   </div>
                 </div>
 
@@ -154,9 +155,9 @@ export default function HeroSection({
         <div className="flex items-center gap-2 text-xs font-bold text-[#667479] mb-6">
           <span>Home</span>
           <span>/</span>
-          <span>Dog &amp; Cat Care</span>
+          <span>Pet Care</span>
           <span>/</span>
-          <span className="text-[#003459]">Pettoh™ Pro 3-in-1 Brush</span>
+          <span className="text-[#003459]">Pettoh™ Pro</span>
         </div>
 
         <div ref={buyBoxRevealRef} className="scroll-reveal grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -219,15 +220,15 @@ export default function HeroSection({
                 <div className="text-[#003459] font-black text-xl">
                   <span ref={trappedRef}>99%</span>
                 </div>
-                <div className="text-[11px] text-[#667479] font-bold">Fur Trapped</div>
+                <div className="text-[11px] text-[#667479] font-bold">{t.hero.statsTrapped}</div>
               </div>
               <div className="card-hover-tilt bg-white p-3.5 rounded-2xl border border-gray-100 shadow-2xs">
                 <div className="text-[#003459] font-black text-xl">0 Scratch</div>
-                <div className="text-[11px] text-[#667479] font-bold">Bead Safety Pins</div>
+                <div className="text-[11px] text-[#667479] font-bold">{t.hero.statsScratch}</div>
               </div>
               <div className="card-hover-tilt bg-white p-3.5 rounded-2xl border border-gray-100 shadow-2xs">
                 <div className="text-[#003459] font-black text-xl">1 Click</div>
-                <div className="text-[11px] text-[#667479] font-bold">Self-Cleaning</div>
+                <div className="text-[11px] text-[#667479] font-bold">{t.hero.statsCleaning}</div>
               </div>
             </div>
 
@@ -239,14 +240,13 @@ export default function HeroSection({
             <div>
               <div className="inline-flex items-center gap-1.5 bg-[#FCEED5] text-[#003459] text-xs font-black px-3.5 py-1 rounded-full mb-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>IN STOCK (EU) • OFFICIAL STORE</span>
+                <span>{t.hero.buyBoxBadge}</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-[#003459] tracking-tight">
-                {PRODUCT_DATA.productName}
+                {t.hero.productTitle}
               </h2>
               <p className="mt-3 text-sm text-[#242B33] leading-relaxed font-medium">
-                Ordinary wire slickers scratch pet skin and create flying static fur. 
-                <strong className="text-[#003459]"> Pettoh™ Pro</strong> combines soothing room-temperature ultrasonic nano-mist and 150° protection pins with a push-button fur ejector for effortless grooming.
+                {t.hero.productDesc}
               </p>
             </div>
 

@@ -1,7 +1,10 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import { PRODUCT_DATA, BundleTier, ProductVariant } from '@/data/productData';
 import { Check, Flame, ShieldCheck, Truck, RefreshCw } from 'lucide-react';
 import { trackViewContent } from '@/lib/analytics';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface BundleSelectorProps {
   selectedBundle: BundleTier;
@@ -18,6 +21,36 @@ export default function BundleSelector({
   onSelectVariant,
   onProceedToCheckout,
 }: BundleSelectorProps) {
+  const { t } = useLanguage();
+
+  const getBundleInfo = (bundleId: string) => {
+    if (bundleId === 'single') {
+      return {
+        title: t.bundles.singleTitle,
+        subtitle: t.bundles.singleSubtitle,
+        badge: t.bundles.singleBadge,
+        freebie: null,
+      };
+    }
+    if (bundleId === 'double') {
+      return {
+        title: t.bundles.duoTitle,
+        subtitle: t.bundles.duoSubtitle,
+        badge: t.bundles.duoBadge,
+        freebie: t.bundles.duoFreebie,
+      };
+    }
+    if (bundleId === 'triple') {
+      return {
+        title: t.bundles.familyTitle,
+        subtitle: t.bundles.familySubtitle,
+        badge: t.bundles.familyBadge,
+        freebie: t.bundles.familyFreebie,
+      };
+    }
+    return null;
+  };
+
   useEffect(() => {
     trackViewContent({
       id: selectedBundle.id,
@@ -26,13 +59,16 @@ export default function BundleSelector({
       currency: 'EUR',
     });
   }, [selectedBundle.id]);
+
+  const selectedInfo = getBundleInfo(selectedBundle.id);
+
   return (
     <div className="space-y-6">
       
       {/* Step 1: Choose Your Color Variant */}
       <div>
         <label className="block text-xs font-black uppercase tracking-wider text-[#003459] mb-2.5">
-          Step 1: Choose Your Color Variant
+          {t.bundles.chooseColor}
         </label>
         <div className="grid grid-cols-2 gap-3">
           {PRODUCT_DATA.variants.map((v) => {
@@ -76,17 +112,22 @@ export default function BundleSelector({
       <div>
         <div className="flex items-center justify-between mb-2.5">
           <label className="block text-xs font-black uppercase tracking-wider text-[#003459]">
-            Step 2: Select Quantity (Value Bundles)
+            {t.bundles.chooseQuantity}
           </label>
           <span className="text-xs font-bold text-[#EDA415] flex items-center gap-1">
             <Flame className="w-3.5 h-3.5 fill-[#EDA415]" />
-            Selling fast in Europe
+            {t.bundles.sellingFast}
           </span>
         </div>
 
         <div className="space-y-3">
           {PRODUCT_DATA.bundles.map((bundle) => {
             const isSelected = selectedBundle.id === bundle.id;
+            const info = getBundleInfo(bundle.id);
+            const title = info?.title || bundle.title;
+            const subtitle = info?.subtitle || bundle.subtitle;
+            const badge = info?.badge || bundle.discountBadge;
+            const freebie = info?.freebie || bundle.freebie;
 
             return (
               <div
@@ -99,7 +140,7 @@ export default function BundleSelector({
                 }`}
               >
                 {/* Popular Badge */}
-                {bundle.discountBadge && (
+                {badge && (
                   <div className="absolute -top-3 right-4">
                     <span
                       className={`text-[10px] sm:text-xs font-black uppercase px-3 py-0.5 rounded-full tracking-wider shadow-xs ${
@@ -108,7 +149,7 @@ export default function BundleSelector({
                           : 'bg-[#FFB703] text-[#003459]'
                       }`}
                     >
-                      {bundle.discountBadge}
+                      {badge}
                     </span>
                   </div>
                 )}
@@ -128,21 +169,21 @@ export default function BundleSelector({
 
                     <div>
                       <h4 className="font-extrabold text-[#003459] text-sm sm:text-base">
-                        {bundle.title}
+                        {title}
                       </h4>
                       <p className="text-xs text-[#667479]">
-                        {bundle.subtitle}
+                        {subtitle}
                       </p>
-                      {bundle.freebie && (
+                      {freebie && (
                         <p className="text-xs font-bold text-[#003459] mt-1 flex items-center gap-1 bg-[#FCEED5] px-2 py-0.5 rounded-md inline-block">
-                          🎁 {bundle.freebie}
+                          🎁 {freebie}
                         </p>
                       )}
                     </div>
                   </div>
 
                   {/* Pricing on the right */}
-                  <div className="text-right">
+                  <div className="text-right flex-shrink-0">
                     <div className="text-lg sm:text-xl font-black text-[#003459]">
                       €{bundle.price.toFixed(2)}
                     </div>
@@ -150,7 +191,7 @@ export default function BundleSelector({
                       €{bundle.originalPrice.toFixed(2)}
                     </div>
                     <div className="text-[11px] font-black text-[#EDA415]">
-                      Save €{bundle.savings.toFixed(2)}
+                      {t.bundles.save} €{bundle.savings.toFixed(2)}
                     </div>
                   </div>
                 </div>
@@ -164,15 +205,15 @@ export default function BundleSelector({
       <div className="bg-[#FCEED5]/50 rounded-2xl p-3.5 border border-[#F7DBA7]/50 flex items-center justify-around text-[11px] sm:text-xs text-[#003459] font-bold text-center gap-2">
         <div className="flex items-center gap-1">
           <Truck className="w-3.5 h-3.5 text-[#003459]" />
-          <span>Tracked EU Delivery (6-9 Days)</span>
+          <span>{t.bundles.deliveryTime}</span>
         </div>
         <div className="flex items-center gap-1">
           <ShieldCheck className="w-3.5 h-3.5 text-[#003459]" />
-          <span>30-Day Money Back</span>
+          <span>{t.bundles.moneyBack}</span>
         </div>
         <div className="flex items-center gap-1">
           <RefreshCw className="w-3.5 h-3.5 text-[#003459]" />
-          <span>Free Returns</span>
+          <span>{t.bundles.freeReturns}</span>
         </div>
       </div>
 
@@ -182,11 +223,11 @@ export default function BundleSelector({
         className="btn-spring w-full bg-[#003459] hover:bg-[#002A48] text-white font-black text-base sm:text-lg py-4 px-6 rounded-full shadow-lg shadow-[#003459]/25 flex flex-col items-center justify-center gap-0.5 animate-glow-pulse group"
       >
         <span className="flex items-center gap-2 tracking-wide uppercase">
-          <span>Claim Discount &amp; Checkout Now</span>
+          <span>{t.bundles.ctaButton}</span>
           <span className="transition-transform group-hover:translate-x-1">➔</span>
         </span>
         <span className="text-xs font-normal text-[#FCEED5]">
-          Selected: {selectedBundle.title} • Total: €{selectedBundle.price.toFixed(2)} (Tax Included)
+          {selectedInfo?.title || selectedBundle.title} • €{selectedBundle.price.toFixed(2)} ({t.bundles.selectedNotice})
         </span>
       </button>
 
@@ -195,7 +236,7 @@ export default function BundleSelector({
         <div className="flex items-center justify-between text-[11px] font-extrabold text-[#003459] border-b border-gray-100 pb-2">
           <span className="flex items-center gap-1.5">
             <span>🚚</span>
-            <span>Dispatched via National Carriers:</span>
+            <span>{t.bundles.dispatchedVia}</span>
           </span>
           <div className="flex items-center gap-2">
             <span className="bg-[#FFCC00]/25 text-[#990000] font-black px-2 py-0.5 rounded text-[10px] border border-[#FFCC00]/50">DHL Paket 🇩🇪</span>
@@ -205,10 +246,10 @@ export default function BundleSelector({
         <div className="flex items-center justify-between text-[11px] text-[#667479]">
           <span className="flex items-center gap-1">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-            <strong className="text-gray-900">Try At Home First:</strong> 30-Day Free Return Policy
+            <strong className="text-gray-900">{t.bundles.tryAtHome}</strong>
           </span>
           <span className="text-[#003459] font-bold text-[10px] bg-[#FCEED5] px-2 py-0.5 rounded-full">
-            🛍️ Klarna Pay in 30 Days Active
+            {t.bundles.klarnaActive}
           </span>
         </div>
       </div>

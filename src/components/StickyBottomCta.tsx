@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { BundleTier } from '@/data/productData';
 import { ShoppingBag, Star } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface StickyBottomCtaProps {
   onOpenCheckout: () => void;
@@ -13,6 +14,7 @@ export default function StickyBottomCta({
   onOpenCheckout,
   selectedBundle,
 }: StickyBottomCtaProps) {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -44,10 +46,10 @@ export default function StickyBottomCta({
           <div>
             <div className="flex items-center gap-1 text-[11px] text-[#FFB703]">
               <Star className="w-3 h-3 fill-[#FFB703] text-[#FFB703]" />
-              <span className="font-bold text-[#003459]">4.9/5 Rating (2.4k+ Reviews)</span>
+              <span className="font-bold text-[#003459]">{t.sticky.ratingText}</span>
             </div>
             <div className="text-xs font-black text-[#003459]">
-              Pettoh™ Pro • Free Tracked EU Shipping
+              {t.sticky.shippingText}
             </div>
           </div>
         </div>
@@ -56,7 +58,7 @@ export default function StickyBottomCta({
         <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
           <div className="text-left sm:text-right">
             <span className="text-[10px] uppercase font-bold text-[#EDA415] tracking-wider block">
-              Spring Sale
+              {t.sticky.springSale}
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="text-base sm:text-lg font-black text-[#003459]">
@@ -73,7 +75,7 @@ export default function StickyBottomCta({
             className="btn-spring bg-[#003459] hover:bg-[#002A48] text-white font-black text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg shadow-[#003459]/25 flex items-center gap-2 animate-glow-pulse"
           >
             <ShoppingBag className="w-4 h-4 text-[#FFB703]" />
-            <span>Claim Discount Now</span>
+            <span>{t.sticky.ctaButton}</span>
           </button>
         </div>
 

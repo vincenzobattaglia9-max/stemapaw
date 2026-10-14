@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingBag, Truck, Settings } from 'lucide-react';
+import { ShoppingBag, Truck } from 'lucide-react';
 import { useNavbarScroll } from '@/hooks/useAnimations';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface NavbarProps {
   onOpenCheckout: () => void;
@@ -11,6 +12,7 @@ interface NavbarProps {
 
 export default function Navbar({ onOpenCheckout, cartCount }: NavbarProps) {
   const { visible, scrolled } = useNavbarScroll();
+  const { language, setLanguage, t } = useLanguage();
 
   return (
     <header
@@ -49,23 +51,63 @@ export default function Navbar({ onOpenCheckout, cartCount }: NavbarProps) {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-bold text-[#003459] mx-4">
-            <a href="#buy-now" className="hover:text-[#EDA415] transition-colors whitespace-nowrap">Product &amp; Bundles</a>
-            <a href="#features" className="hover:text-[#EDA415] transition-colors whitespace-nowrap">Features</a>
-            <a href="#comparison" className="hover:text-[#EDA415] transition-colors whitespace-nowrap">Why Pettoh™?</a>
-            <a href="#reviews" className="hover:text-[#EDA415] transition-colors whitespace-nowrap">Reviews (2.4k+)</a>
-            <a href="#faq" className="hover:text-[#EDA415] transition-colors whitespace-nowrap">FAQ</a>
+            <a href="#buy-now" className="hover:text-[#EDA415] transition-colors whitespace-nowrap">
+              {language === 'de' ? 'Pakete & Rabatt' : language === 'nl' ? 'Pakketten & Deals' : 'Product & Bundles'}
+            </a>
+            <a href="#features" className="hover:text-[#EDA415] transition-colors whitespace-nowrap">
+              {language === 'de' ? 'Vorteile' : language === 'nl' ? 'Kenmerken' : 'Features'}
+            </a>
+            <a href="#comparison" className="hover:text-[#EDA415] transition-colors whitespace-nowrap">
+              {language === 'de' ? 'Warum Pettoh™?' : language === 'nl' ? 'Waarom Pettoh™?' : 'Why Pettoh™?'}
+            </a>
+            <a href="#reviews" className="hover:text-[#EDA415] transition-colors whitespace-nowrap">
+              {language === 'de' ? 'Bewertungen (2.4k+)' : language === 'nl' ? 'Reviews (2.4k+)' : 'Reviews (2.4k+)'}
+            </a>
+            <a href="#faq" className="hover:text-[#EDA415] transition-colors whitespace-nowrap">
+              FAQ
+            </a>
             <Link href="/track" className="flex items-center gap-1.5 text-[#003459]/80 hover:text-[#003459] transition-colors whitespace-nowrap">
               <Truck className="w-4 h-4 text-[#FFB703]" />
-              <span>Track Order</span>
+              <span>{language === 'de' ? 'Paket verfolgen' : language === 'nl' ? 'Bestelling volgen' : 'Track Order'}</span>
             </Link>
           </nav>
 
           {/* Right Actions: Currency, Admin & CTA */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             
+            {/* Language Selector Pill */}
+            <div className="flex items-center bg-white/90 border border-gray-200/90 rounded-full p-0.5 text-xs font-bold text-[#003459] shadow-2xs">
+              <button
+                onClick={() => setLanguage('de')}
+                className={`px-2 py-1 rounded-full transition-all ${
+                  language === 'de' ? 'bg-[#003459] text-white shadow-xs' : 'hover:bg-gray-100 text-gray-700'
+                }`}
+                title="Deutsch"
+              >
+                🇩🇪 DE
+              </button>
+              <button
+                onClick={() => setLanguage('nl')}
+                className={`px-2 py-1 rounded-full transition-all ${
+                  language === 'nl' ? 'bg-[#003459] text-white shadow-xs' : 'hover:bg-gray-100 text-gray-700'
+                }`}
+                title="Nederlands"
+              >
+                🇳🇱 NL
+              </button>
+              <button
+                onClick={() => setLanguage('en')}
+                className={`px-2 py-1 rounded-full transition-all ${
+                  language === 'en' ? 'bg-[#003459] text-white shadow-xs' : 'hover:bg-gray-100 text-gray-700'
+                }`}
+                title="English"
+              >
+                🇬🇧 EN
+              </button>
+            </div>
+
             {/* Currency Pill */}
-            <div className="hidden sm:flex items-center gap-1.5 bg-white/90 border border-gray-200/80 px-3 py-1.5 rounded-full text-xs font-bold text-[#003459] shadow-xs">
-              <span>🇪🇺</span>
+            <div className="hidden md:flex items-center gap-1.5 bg-white/90 border border-gray-200/80 px-2.5 py-1.5 rounded-full text-xs font-bold text-[#003459] shadow-xs">
               <span>EUR (€)</span>
             </div>
 
@@ -75,7 +117,7 @@ export default function Navbar({ onOpenCheckout, cartCount }: NavbarProps) {
               className="btn-spring flex items-center gap-2 bg-[#003459] hover:bg-[#002A48] text-white font-black text-xs sm:text-sm px-4 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-md shadow-[#003459]/25 whitespace-nowrap animate-glow-pulse"
             >
               <ShoppingBag className="w-4 h-4 text-[#FFB703]" />
-              <span>Order Now</span>
+              <span>{language === 'de' ? 'Bestellen' : language === 'nl' ? 'Bestellen' : 'Order Now'}</span>
               {cartCount > 0 && (
                 <span className="bg-[#FFB703] text-[#003459] text-[11px] font-black w-5 h-5 rounded-full flex items-center justify-center -mr-1 animate-scale">
                   {cartCount}
