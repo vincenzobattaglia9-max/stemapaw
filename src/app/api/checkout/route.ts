@@ -20,7 +20,8 @@ export async function POST(request: Request) {
       quantity, 
       customerName, 
       email,
-      orderBumpSelected 
+      orderBumpSelected,
+      promoCode
     } = body;
 
     const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -60,6 +61,7 @@ export async function POST(request: Request) {
       const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
+        allow_promotion_codes: true,
         // Critical for abandoned cart recovery: pre-populate customer email
         customer_email: email && email.includes('@') ? email.trim() : undefined,
         billing_address_collection: 'required',
@@ -76,6 +78,7 @@ export async function POST(request: Request) {
           customerName: customerName || '',
           customerEmail: email || '',
           orderBump: orderBumpSelected ? 'yes' : 'no',
+          promoCode: promoCode || '',
         },
       });
 

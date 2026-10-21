@@ -159,6 +159,12 @@ export interface Translations {
     totalPaid: string;
     trackPackage: string;
     close: string;
+    promoCodeLabel: string;
+    promoCodePlaceholder: string;
+    promoCodeApply: string;
+    promoCodeApplied: string;
+    promoCodeInvalid: string;
+    promoCodeDiscount: string;
   };
   sticky: {
     springSale: string;
@@ -377,7 +383,13 @@ export const TRANSLATIONS: Record<SupportedLanguage, Translations> = {
       trackingCode: 'DHL Sendungscode:',
       totalPaid: 'Bezahlter Gesamtbetrag:',
       trackPackage: 'Paket online verfolgen ➔',
-      close: 'Schließen'
+      close: 'Schließen',
+      promoCodeLabel: 'Haben Sie einen Gutscheincode?',
+      promoCodePlaceholder: 'Code eingeben (z. B. PFOTE10)',
+      promoCodeApply: 'Anwenden',
+      promoCodeApplied: 'Gutscheincode PFOTE10 aktiviert (-10%)',
+      promoCodeInvalid: 'Ungültiger Gutscheincode',
+      promoCodeDiscount: 'Zusatz-Rabatt',
     },
     sticky: {
       springSale: 'Frühlings-Rabatt',
@@ -594,7 +606,13 @@ export const TRANSLATIONS: Record<SupportedLanguage, Translations> = {
       trackingCode: 'PostNL Track & Trace:',
       totalPaid: 'Totaal betaald:',
       trackPackage: 'Volg je pakket ➔',
-      close: 'Sluiten'
+      close: 'Sluiten',
+      promoCodeLabel: 'Heb je een kortingscode?',
+      promoCodePlaceholder: 'Kortingscode invoeren (bijv. PFOTE10)',
+      promoCodeApply: 'Toepassen',
+      promoCodeApplied: 'Kortingscode PFOTE10 toegepast (-10%)',
+      promoCodeInvalid: 'Ongeldige kortingscode',
+      promoCodeDiscount: 'Extra korting',
     },
     sticky: {
       springSale: 'Voorjaarsactie',
@@ -811,7 +829,13 @@ export const TRANSLATIONS: Record<SupportedLanguage, Translations> = {
       trackingCode: 'Tracking Code:',
       totalPaid: 'Total Paid:',
       trackPackage: 'Track Your Package ➔',
-      close: 'Close'
+      close: 'Close',
+      promoCodeLabel: 'Have a promo code?',
+      promoCodePlaceholder: 'Enter code (e.g. PFOTE10)',
+      promoCodeApply: 'Apply',
+      promoCodeApplied: 'Promo code PFOTE10 applied (-10%)',
+      promoCodeInvalid: 'Invalid promo code',
+      promoCodeDiscount: 'Extra Discount',
     },
     sticky: {
       springSale: 'Spring Sale',

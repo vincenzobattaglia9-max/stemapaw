@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { BundleTier, ProductVariant } from '@/data/productData';
-import { X, ShieldCheck, Lock, Truck, Loader2, AlertCircle } from 'lucide-react';
+import { X, ShieldCheck, Lock, Truck, Loader2, AlertCircle, Tag, Check } from 'lucide-react';
 import { trackInitiateCheckout } from '@/lib/analytics';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -38,6 +38,9 @@ export default function CheckoutModal({
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [orderCompleted, setOrderCompleted] = useState<{ id: string; trackingNumber: string } | null>(null);
+  const [promoCodeInput, setPromoCodeInput] = useState('');
+  const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
+  const [promoError, setPromoError] = useState<string | null>(null);
 
   // Keep persistedForm in sync so data survives modal close/open
   const updateField = useCallback((field: string, value: any) => {
@@ -46,22 +49,38 @@ export default function CheckoutModal({
     persistedForm = { ...persistedForm, [field]: value };
   }, [formData]);
 
+  const basePrice = selectedBundle.price;
+  const discountAmount = appliedPromo === 'PFOTE10' ? Math.round(basePrice * 0.10 * 100) / 100 : 0;
+  const finalPrice = Math.max(0, +(basePrice - discountAmount).toFixed(2));
+
+  const handleApplyPromo = () => {
+    setPromoError(null);
+    const cleaned = promoCodeInput.trim().toUpperCase();
+    if (cleaned === 'PFOTE10') {
+      setAppliedPromo('PFOTE10');
+    } else if (!cleaned) {
+      setPromoError(null);
+    } else {
+      setPromoError(t.checkout.promoCodeInvalid);
+    }
+  };
+
   // Track InitiateCheckout as soon as modal opens
   useEffect(() => {
     if (isOpen) {
       trackInitiateCheckout({
         id: selectedBundle.id,
         name: `${selectedBundle.title} (${selectedVariant.name})`,
-        price: selectedBundle.price,
+        price: finalPrice,
         quantity: selectedBundle.quantity,
         currency: 'EUR',
       });
     }
-  }, [isOpen, selectedBundle, selectedVariant]);
+  }, [isOpen, selectedBundle, selectedVariant, finalPrice]);
 
   if (!isOpen) return null;
 
-  const currentTotal = selectedBundle.price;
+  const currentTotal = finalPrice;
 
   // Localized bundle title mapping
   const bundleDisplayTitle =
@@ -88,7 +107,7 @@ export default function CheckoutModal({
     trackInitiateCheckout({
       id: selectedBundle.id,
       name: `${bundleDisplayTitle} (${selectedVariant.name})`,
-      price: currentTotal,
+      price: finalPrice,
       quantity: selectedBundle.quantity,
       currency: 'EUR',
     });
@@ -107,8 +126,9 @@ export default function CheckoutModal({
           bundleTitle: bundleDisplayTitle,
           variantName: selectedVariant.name,
           quantity: selectedBundle.quantity,
-          totalAmount: selectedBundle.price,
+          totalAmount: finalPrice,
           paymentMethod: formData.paymentMethod,
+          promoCode: appliedPromo || '',
         }),
       });
 
@@ -256,21 +276,100 @@ export default function CheckoutModal({
             </div>
 
             {/* Order Summary Pill */}
-            <div className="bg-[#FCEED5]/50 border border-[#F7DBA7] rounded-2xl p-4 flex items-center justify-between text-xs sm:text-sm">
-              <div>
-                <span className="font-black text-[#003459] block">{bundleDisplayTitle}</span>
-                <span className="text-[#003459]/70 text-xs font-semibold">{selectedVariant.name} · {t.checkout.freeShippingBadge}</span>
-                {bundleFreebie && (
-                  <span className="text-[11px] font-bold text-[#003459] bg-[#FCEED5] border border-[#F7DBA7] px-2 py-0.5 rounded-full mt-1 inline-block">
-                    🎁 {bundleFreebie}
+            <div className="bg-[#FCEED5]/50 border border-[#F7DBA7] rounded-2xl p-4 text-xs sm:text-sm space-y-2">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="font-black text-[#003459] block">{bundleDisplayTitle}</span>
+                  <span className="text-[#003459]/70 text-xs font-semibold">{selectedVariant.name} · {t.checkout.freeShippingBadge}</span>
+                  {bundleFreebie && (
+                    <span className="text-[11px] font-bold text-[#003459] bg-[#FCEED5] border border-[#F7DBA7] px-2 py-0.5 rounded-full mt-1 inline-block">
+                      🎁 {bundleFreebie}
+                    </span>
+                  )}
+                </div>
+                <div className="text-right flex-shrink-0">
+                  <div className="flex items-baseline gap-1.5 justify-end">
+                    {appliedPromo && (
+                      <span className="text-xs text-gray-400 line-through">€{basePrice.toFixed(2)}</span>
+                    )}
+                    <span className="text-lg font-black text-[#003459]">€{finalPrice.toFixed(2)}</span>
+                  </div>
+                  <span className="text-[10px] text-gray-400 block line-through">€{selectedBundle.originalPrice.toFixed(2)}</span>
+                  <span className="text-[11px] font-black text-[#EDA415]">
+                    {t.bundles.save} €{(selectedBundle.savings + discountAmount).toFixed(2)}
                   </span>
-                )}
+                </div>
               </div>
-              <div className="text-right flex-shrink-0">
-                <span className="text-lg font-black text-[#003459]">€{selectedBundle.price.toFixed(2)}</span>
-                <span className="text-[10px] text-gray-400 block line-through">€{selectedBundle.originalPrice.toFixed(2)}</span>
-                <span className="text-[11px] font-black text-[#EDA415]">{t.bundles.save} €{selectedBundle.savings.toFixed(2)}</span>
+              {appliedPromo && (
+                <div className="flex justify-between items-center text-xs text-emerald-800 font-bold bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl">
+                  <span className="flex items-center gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>{t.checkout.promoCodeApplied}</span>
+                  </span>
+                  <span>-€{discountAmount.toFixed(2)}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Promo Code Input Box */}
+            <div className="bg-[#FDFBF8] border border-gray-200 rounded-2xl p-3 space-y-2">
+              <div className="flex items-center justify-between text-xs font-bold text-[#003459]">
+                <div className="flex items-center gap-1.5">
+                  <Tag className="w-3.5 h-3.5 text-[#EDA415]" />
+                  <span>{t.checkout.promoCodeLabel}</span>
+                </div>
               </div>
+              
+              {appliedPromo ? (
+                <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 text-emerald-900 px-3 py-2 rounded-xl text-xs font-bold">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono bg-white px-2 py-0.5 rounded border border-emerald-300 text-[#003459]">PFOTE10</span>
+                    <span className="text-emerald-700">✓ -10% Extra</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAppliedPromo(null);
+                      setPromoCodeInput('');
+                    }}
+                    className="text-gray-500 hover:text-red-600 text-xs font-semibold underline transition-colors"
+                  >
+                    Entfernen
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder={t.checkout.promoCodePlaceholder}
+                    value={promoCodeInput}
+                    onChange={(e) => {
+                      setPromoCodeInput(e.target.value);
+                      if (promoError) setPromoError(null);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleApplyPromo();
+                      }
+                    }}
+                    className="flex-1 text-xs uppercase font-mono px-3 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#003459] bg-white"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleApplyPromo}
+                    className="btn-spring px-4 py-2.5 bg-[#003459] hover:bg-[#002A48] text-white text-xs font-black rounded-xl transition-all"
+                  >
+                    {t.checkout.promoCodeApply}
+                  </button>
+                </div>
+              )}
+
+              {promoError && (
+                <p className="text-[11px] text-red-600 font-semibold pl-1">
+                  {promoError}
+                </p>
+              )}
             </div>
 
             {/* Step 1: Customer Contact Info */}
