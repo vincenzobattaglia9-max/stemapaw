@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { trackPageView } from '@/lib/analytics';
 
 export default function TrackingPixels() {
-  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID || '1840358950723269';
   const tiktokPixelId = process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID;
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
