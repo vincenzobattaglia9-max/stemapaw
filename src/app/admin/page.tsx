@@ -42,6 +42,28 @@ interface DailyAdEntry {
 
 const DEFAULT_METRIC_ENTRIES: DailyAdEntry[] = [
   {
+    id: 'entry-sales-launch',
+    date: '2026-10-21',
+    spend: 0.00,
+    impressions: 0,
+    reach: 0,
+    linkClicks: 0,
+    cpc: 0.00,
+    cpm: 0.00,
+    notes: '🚀 NUOVA CAMPAGNA VENDITE ATTIVA: "[Pettoh] - Vendite DE - Test 20€". Meta Pixel 1840358950723269 attivo su pettoh.com. Target: Germania 🇩🇪, 45-65+, budget 10€/gg per 48h (Cap 20€).'
+  },
+  {
+    id: 'entry-traffic-total',
+    date: '2026-10-18',
+    spend: 55.74,
+    impressions: 3807,
+    reach: 2998,
+    linkClicks: 324,
+    cpc: 0.17,
+    cpm: 14.64,
+    notes: '🏁 CAMPAGNA "Pettoh First" CONCLUSA: 324 Clic sul link (CTR 8.51%, CPC 0.17€). Oltre l\'86% dei clic registrati da over 45 in Germania (163 clic over 65 a 0.08€).'
+  },
+  {
     id: 'entry-3',
     date: '2026-10-14',
     spend: 8.27,
@@ -50,7 +72,7 @@ const DEFAULT_METRIC_ENTRIES: DailyAdEntry[] = [
     linkClicks: 10,
     cpc: 0.83,
     cpm: 15.31,
-    notes: 'Domain updated to pettoh.com. Senior audience 65+ drove the lowest click costs (0.43€).'
+    notes: 'Dominio pettoh.com e localizzazione tedesca/olandese in fase di rilascio.'
   },
   {
     id: 'entry-2',
@@ -61,7 +83,7 @@ const DEFAULT_METRIC_ENTRIES: DailyAdEntry[] = [
     linkClicks: 32,
     cpc: 0.26,
     cpm: 13.61,
-    notes: 'Outstanding scaling: 55-64 age segment exploded with 6.7% CTR. CPC dropped to 0.26€.'
+    notes: 'Segmento 55-64 con CTR 6.7%. CPC sceso a 0.26€.'
   },
   {
     id: 'entry-1',
@@ -72,7 +94,7 @@ const DEFAULT_METRIC_ENTRIES: DailyAdEntry[] = [
     linkClicks: 14,
     cpc: 0.58,
     cpm: 16.91,
-    notes: 'First launch day (DE + NL). Shiba Inu video hook performed outstandingly (0.58€ CPC).'
+    notes: 'Lancio iniziale video Shiba Inu.'
   }
 ];
 
@@ -397,6 +419,46 @@ export default function AdminPage() {
         {activeTab === 'marketing' && (
           <div className="space-y-8 animate-in fade-in duration-200">
             
+            {/* Live Campaign & Pixel Status Badge */}
+            <div className="bg-white rounded-3xl p-6 border-2 border-[#003459] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="flex items-start gap-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center flex-shrink-0 text-xl font-black">
+                  🟢
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                      Campagna Vendite Attiva
+                    </span>
+                    <span className="text-xs font-bold text-[#003459] bg-[#FCEED5] px-2.5 py-0.5 rounded-full">
+                      🇩🇪 Target Germania 45-65+
+                    </span>
+                    <span className="text-xs font-black text-white bg-[#003459] px-2.5 py-0.5 rounded-full">
+                      Budget 10€ / giorno
+                    </span>
+                  </div>
+                  <h2 className="text-lg font-black text-[#003459] mt-1.5">
+                    [Pettoh] - Vendite DE - Test 20€
+                  </h2>
+                  <p className="text-xs text-[#667479] mt-0.5">
+                    Meta Pixel: <strong className="font-mono text-[#003459]">1840358950723269</strong> (Attivo) • Evento: <strong>Acquisto (Purchase)</strong> • Destinazione: <code className="text-[11px] bg-gray-100 px-1 py-0.5 rounded">https://www.pettoh.com/#buy-now</code>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <a
+                  href="https://adsmanager.facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-spring inline-flex items-center gap-2 bg-[#003459] hover:bg-[#002A48] text-white font-bold text-xs px-4 py-2.5 rounded-full shadow-xs"
+                >
+                  <span>Apri Meta Ads Manager</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+
             {/* Top KPI Summary */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               
