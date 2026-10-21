@@ -141,16 +141,23 @@ export default function Navbar({ onOpenCheckout, cartCount }: NavbarProps) {
 
             {/* CTA Pettoh Pill Button */}
             <button
-              onClick={onOpenCheckout}
+              onClick={() => {
+                if (cartCount === 0) {
+                  const el = document.getElementById('buy-now');
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                  }
+                }
+                onOpenCheckout();
+              }}
               className="btn-spring flex items-center gap-2 bg-[#003459] hover:bg-[#002A48] text-white font-black text-xs sm:text-sm px-4 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-md shadow-[#003459]/25 whitespace-nowrap animate-glow-pulse"
             >
               <ShoppingBag className="w-4 h-4 text-[#FFB703]" />
               <span>{language === 'de' ? 'Bestellen' : language === 'nl' ? 'Bestellen' : 'Order Now'}</span>
-              {cartCount > 0 && (
-                <span className="bg-[#FFB703] text-[#003459] text-[11px] font-black w-5 h-5 rounded-full flex items-center justify-center -mr-1 animate-scale">
-                  {cartCount}
-                </span>
-              )}
+              <span className="bg-[#FFB703] text-[#003459] text-[11px] font-black w-5 h-5 rounded-full flex items-center justify-center -mr-1 animate-scale">
+                {cartCount}
+              </span>
             </button>
 
           </div>

@@ -9,7 +9,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 interface HeroSectionProps {
   onOpenCheckout: () => void;
-  selectedBundle: BundleTier;
+  selectedBundle: BundleTier | null;
   onSelectBundle: (bundle: BundleTier) => void;
   selectedVariant: ProductVariant;
   onSelectVariant: (variant: ProductVariant) => void;

@@ -16,22 +16,36 @@ import { PRODUCT_DATA, BundleTier, ProductVariant } from '@/data/productData';
 import { LanguageProvider } from '@/context/LanguageContext';
 
 export default function Home() {
-  const [selectedBundle, setSelectedBundle] = useState<BundleTier>(PRODUCT_DATA.bundles[1]); // Default to popular duo pack
+  // Start with null so cart starts at 0 articles on initial landing
+  const [selectedBundle, setSelectedBundle] = useState<BundleTier | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(PRODUCT_DATA.variants[0]);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
+  const cartCount = selectedBundle ? selectedBundle.quantity : 0;
+  const activeCheckoutBundle = selectedBundle || PRODUCT_DATA.bundles[0];
 
   return (
     <LanguageProvider>
       <div className="min-h-screen flex flex-col selection:bg-emerald-200 selection:text-emerald-900">
         <AnnouncementBar />
         <Navbar
-          onOpenCheckout={() => setIsCheckoutOpen(true)}
-          cartCount={selectedBundle.quantity}
+          onOpenCheckout={() => {
+            if (!selectedBundle) {
+              setSelectedBundle(PRODUCT_DATA.bundles[0]);
+            }
+            setIsCheckoutOpen(true);
+          }}
+          cartCount={cartCount}
         />
       
       <main className="flex-grow">
         <HeroSection
-          onOpenCheckout={() => setIsCheckoutOpen(true)}
+          onOpenCheckout={() => {
+            if (!selectedBundle) {
+              setSelectedBundle(PRODUCT_DATA.bundles[0]);
+            }
+            setIsCheckoutOpen(true);
+          }}
           selectedBundle={selectedBundle}
           onSelectBundle={setSelectedBundle}
           selectedVariant={selectedVariant}
@@ -47,14 +61,19 @@ export default function Home() {
       <Footer />
 
       <StickyBottomCta
-        onOpenCheckout={() => setIsCheckoutOpen(true)}
+        onOpenCheckout={() => {
+          if (!selectedBundle) {
+            setSelectedBundle(PRODUCT_DATA.bundles[0]);
+          }
+          setIsCheckoutOpen(true);
+        }}
         selectedBundle={selectedBundle}
       />
 
       <CheckoutModal
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
-        selectedBundle={selectedBundle}
+        selectedBundle={activeCheckoutBundle}
         selectedVariant={selectedVariant}
       />
     </div>

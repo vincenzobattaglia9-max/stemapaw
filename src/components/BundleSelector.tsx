@@ -7,7 +7,7 @@ import { trackViewContent } from '@/lib/analytics';
 import { useLanguage } from '@/context/LanguageContext';
 
 interface BundleSelectorProps {
-  selectedBundle: BundleTier;
+  selectedBundle: BundleTier | null;
   onSelectBundle: (bundle: BundleTier) => void;
   selectedVariant: ProductVariant;
   onSelectVariant: (variant: ProductVariant) => void;
@@ -52,15 +52,17 @@ export default function BundleSelector({
   };
 
   useEffect(() => {
-    trackViewContent({
-      id: selectedBundle.id,
-      name: `${PRODUCT_DATA.productName} - ${selectedBundle.title}`,
-      price: selectedBundle.price,
-      currency: 'EUR',
-    });
-  }, [selectedBundle.id]);
+    if (selectedBundle) {
+      trackViewContent({
+        id: selectedBundle.id,
+        name: `${PRODUCT_DATA.productName} - ${selectedBundle.title}`,
+        price: selectedBundle.price,
+        currency: 'EUR',
+      });
+    }
+  }, [selectedBundle?.id]);
 
-  const selectedInfo = getBundleInfo(selectedBundle.id);
+  const selectedInfo = selectedBundle ? getBundleInfo(selectedBundle.id) : null;
 
   return (
     <div className="space-y-6">
@@ -122,7 +124,7 @@ export default function BundleSelector({
 
         <div className="space-y-3">
           {PRODUCT_DATA.bundles.map((bundle) => {
-            const isSelected = selectedBundle.id === bundle.id;
+            const isSelected = selectedBundle?.id === bundle.id;
             const info = getBundleInfo(bundle.id);
             const title = info?.title || bundle.title;
             const subtitle = info?.subtitle || bundle.subtitle;
@@ -219,7 +221,12 @@ export default function BundleSelector({
 
       {/* Main Solid Navy Button with Glow Pulse & Spring */}
       <button
-        onClick={onProceedToCheckout}
+        onClick={() => {
+          if (!selectedBundle) {
+            onSelectBundle(PRODUCT_DATA.bundles[0]); // default to 1x pack if none chosen
+          }
+          onProceedToCheckout();
+        }}
         className="btn-spring w-full bg-[#003459] hover:bg-[#002A48] text-white font-black text-base sm:text-lg py-4 px-6 rounded-full shadow-lg shadow-[#003459]/25 flex flex-col items-center justify-center gap-0.5 animate-glow-pulse group"
       >
         <span className="flex items-center gap-2 tracking-wide uppercase">
@@ -227,7 +234,10 @@ export default function BundleSelector({
           <span className="transition-transform group-hover:translate-x-1">➔</span>
         </span>
         <span className="text-xs font-normal text-[#FCEED5]">
-          {selectedInfo?.title || selectedBundle.title} • €{selectedBundle.price.toFixed(2)} ({t.bundles.selectedNotice})
+          {selectedBundle
+            ? `${selectedInfo?.title || selectedBundle.title} • €${selectedBundle.price.toFixed(2)} (${t.bundles.selectedNotice})`
+            : `${t.bundles.singleTitle} • €28.00 (${t.bundles.selectedNotice})`
+          }
         </span>
       </button>
 

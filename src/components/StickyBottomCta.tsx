@@ -7,7 +7,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 interface StickyBottomCtaProps {
   onOpenCheckout: () => void;
-  selectedBundle: BundleTier;
+  selectedBundle: BundleTier | null;
 }
 
 export default function StickyBottomCta({
@@ -62,10 +62,10 @@ export default function StickyBottomCta({
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="text-base sm:text-lg font-black text-[#003459]">
-                €{selectedBundle.price.toFixed(2)}
+                €{selectedBundle ? selectedBundle.price.toFixed(2) : '28.00'}
               </span>
               <span className="text-xs text-gray-400 line-through">
-                €{selectedBundle.originalPrice.toFixed(2)}
+                €{selectedBundle ? selectedBundle.originalPrice.toFixed(2) : '40.00'}
               </span>
             </div>
           </div>
