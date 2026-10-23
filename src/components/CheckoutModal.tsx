@@ -21,7 +21,7 @@ let persistedForm = {
   city: '',
   postalCode: '',
   country: 'Germany 🇩🇪',
-  paymentMethod: 'Credit Card (Stripe)',
+  paymentMethod: 'Klarna Pay Later',
 };
 
 export default function CheckoutModal({
@@ -408,6 +408,7 @@ export default function CheckoutModal({
                   className="w-full text-sm px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all"
                 />
                 <input
+                  required
                   type="text"
                   placeholder={t.checkout.streetAddress}
                   value={formData.address}
@@ -418,6 +419,7 @@ export default function CheckoutModal({
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 <input
+                  required
                   type="text"
                   placeholder={t.checkout.postalCode}
                   value={formData.postalCode}
@@ -425,6 +427,7 @@ export default function CheckoutModal({
                   className="w-full text-sm px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#003459] transition-all"
                 />
                 <input
+                  required
                   type="text"
                   placeholder={t.checkout.city}
                   value={formData.city}
@@ -461,19 +464,23 @@ export default function CheckoutModal({
               </div>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 {[
-                  { name: 'Credit Card (Stripe)', label: t.checkout.cardsApplePay, badge: '' },
                   { 
                     name: 'Klarna Pay Later', 
                     label: t.checkout.klarnaPayLater, 
-                    badge: language === 'de' ? 'Top Wahl DE' : 'Klarna 30d' 
+                    badge: language === 'de' ? 'Top Wahl DE (Rechnung)' : 'Klarna 30d' 
                   },
                   { 
-                    name: 'iDEAL Payment', 
-                    label: t.checkout.idealPayment, 
-                    badge: language === 'nl' ? 'Meest gekozen NL' : 'iDEAL' 
+                    name: 'Credit Card (Stripe)', 
+                    label: t.checkout.cardsApplePay, 
+                    badge: 'Sofort & Sicher' 
                   },
                   { 
-                    name: 'PayPal Direct', 
+                    name: 'Amazon Pay', 
+                    label: '🛒 Amazon Pay', 
+                    badge: '1-Klick' 
+                  },
+                  { 
+                    name: 'PayPal / Direkt', 
                     label: t.checkout.paypalDirect, 
                     badge: 'Käuferschutz' 
                   },

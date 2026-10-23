@@ -10,6 +10,21 @@ const stripe = stripeSecretKey
     })
   : null;
 
+function getCountryCode(countryStr?: string): string {
+  if (!countryStr) return 'DE';
+  const c = countryStr.toLowerCase();
+  if (c.includes('germany') || c.includes('deutschland') || c.includes('de')) return 'DE';
+  if (c.includes('netherland') || c.includes('nederland') || c.includes('nl')) return 'NL';
+  if (c.includes('austria') || c.includes('österreich') || c.includes('at')) return 'AT';
+  if (c.includes('belgi') || c.includes('be')) return 'BE';
+  if (c.includes('franc') || c.includes('fr')) return 'FR';
+  if (c.includes('ital') || c.includes('it')) return 'IT';
+  if (c.includes('spain') || c.includes('spanien') || c.includes('es')) return 'ES';
+  if (c.includes('sweden') || c.includes('schweden') || c.includes('se')) return 'SE';
+  if (c.includes('united kingdom') || c.includes('gb') || c.includes('uk')) return 'GB';
+  return 'DE';
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -20,6 +35,11 @@ export async function POST(request: Request) {
       quantity, 
       customerName, 
       email,
+      address,
+      city,
+      postalCode,
+      country,
+      paymentMethod,
       orderBumpSelected,
       promoCode
     } = body;
@@ -28,6 +48,41 @@ export async function POST(request: Request) {
 
     // If Stripe is configured with a live or test key
     if (stripe) {
+      const countryCode = getCountryCode(country);
+
+      // Pre-create customer with shipping address so Stripe Checkout opens with address ALREADY filled in!
+      let customerId: string | undefined;
+      if (email && email.includes('@')) {
+        try {
+          const customer = await stripe.customers.create({
+            name: customerName || undefined,
+            email: email.trim(),
+            shipping: address ? {
+              name: customerName || 'Valued Customer',
+              address: {
+                line1: address,
+                city: city || undefined,
+                postal_code: postalCode || undefined,
+                country: countryCode,
+              }
+            } : undefined,
+            address: address ? {
+              line1: address,
+              city: city || undefined,
+              postal_code: postalCode || undefined,
+              country: countryCode,
+            } : undefined,
+            metadata: {
+              bundleTitle: bundleTitle || '',
+              variantName: variantName || '',
+            }
+          });
+          customerId = customer.id;
+        } catch (custErr: any) {
+          console.warn('[Stripe Customer Warning]:', custErr.message);
+        }
+      }
+
       const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
         {
           price_data: {
@@ -62,9 +117,15 @@ export async function POST(request: Request) {
         line_items: lineItems,
         mode: 'payment',
         allow_promotion_codes: true,
-        // Critical for abandoned cart recovery: pre-populate customer email
-        customer_email: email && email.includes('@') ? email.trim() : undefined,
-        billing_address_collection: 'required',
+        ...(customerId ? {
+          customer: customerId,
+          customer_update: {
+            shipping: 'auto',
+            address: 'auto'
+          }
+        } : {
+          customer_email: email && email.includes('@') ? email.trim() : undefined,
+        }),
         shipping_address_collection: {
           allowed_countries: [
             'DE', 'FR', 'NL', 'IT', 'ES', 'AT', 'BE', 'SE', 'DK', 'PL', 'IE', 'GB', 'PT', 'FI', 'CZ', 'RO', 'HU'
@@ -79,6 +140,7 @@ export async function POST(request: Request) {
           customerEmail: email || '',
           orderBump: orderBumpSelected ? 'yes' : 'no',
           promoCode: promoCode || '',
+          preferredMethod: paymentMethod || '',
         },
       });
 
@@ -86,16 +148,16 @@ export async function POST(request: Request) {
       const recordedOrder = addOrder({
         customerName: customerName || 'European Pet Parent',
         email: email || 'checkout@stripe.com',
-        address: body.address || 'Recorded in Stripe Checkout',
-        city: body.city || 'Europe',
-        postalCode: body.postalCode || 'EU',
-        country: body.country || 'European Union 🇪🇺',
+        address: address || 'Recorded in Stripe Checkout',
+        city: city || 'Europe',
+        postalCode: postalCode || 'EU',
+        country: country || 'Germany 🇩🇪',
         bundleTitle: bundleTitle,
         variantName: variantName,
         quantity: quantity || 1,
         totalAmount: orderBumpSelected ? Number(totalAmount) + 5.99 : Number(totalAmount),
         currency: 'EUR',
-        paymentMethod: 'Stripe Live (Card / Klarna / Apple Pay)',
+        paymentMethod: paymentMethod || 'Stripe Live (Klarna / Card / Apple Pay / Amazon Pay)',
       });
 
       // Send transactional confirmation email asynchronously (with fallback logger)
